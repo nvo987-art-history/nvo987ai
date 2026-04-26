@@ -1,0 +1,154 @@
+[
+  {
+    "slug": "resume-fresher-india",
+    "title": "ATS Resume Prompt for Freshers in India",
+    "category": "Resume",
+    "description": "A professional ATS resume prompt optimized for Indian freshers applying for entry-level jobs.",
+    "prompt": "Act as a senior HR recruiter in India. Rewrite my resume into an ATS-friendly professional resume.\n\nRules:\n- Keep it 1 page\n- Use Indian job market standards\n- Use strong action verbs\n- Quantify achievements where possible\n- Format with these sections: Summary, Skills, Projects, Internship/Experience, Education, Certifications, Achievements\n- Avoid unnecessary personal details\n\nHere is my resume text:\n\n[PASTE HERE]",
+    "tags": ["resume", "fresher", "india", "ats", "job"]
+  },
+  {
+    "slug": "resume-software-engineer-india",
+    "title": "ATS Resume Prompt – Software Engineer (India)",
+    "category": "Resume",
+    "description": "Generate a modern ATS software engineer resume optimized for the Indian tech job market.",
+    "prompt": "Act as an expert resume writer for Indian software engineering roles.\n\nTask: Rewrite my resume for an Indian software engineer job.\n\nRules:\n- ATS friendly\n- Use metrics (%, performance, users, scale)\n- Add a strong professional summary\n- Add technical skills grouped by category\n- Use bullet points\n- Keep it professional and concise\n\nResume:\n\n[PASTE HERE]",
+    "tags": ["resume", "software engineer", "india", "ats"]
+  },
+  {
+    "slug": "linkedin-headline-india",
+    "title": "LinkedIn Headline Generator Prompt (India)",
+    "category": "LinkedIn",
+    "description": "Create a strong LinkedIn headline optimized for Indian recruiters and IT companies.",
+    "prompt": "Act as a LinkedIn profile expert in India.\n\nGenerate 10 powerful LinkedIn headlines for this profile:\n\nRole/Goal: [YOUR ROLE]\nSkills: [YOUR SKILLS]\nTarget Companies: [TCS / Infosys / Startup / etc]\n\nRules:\n- Use Indian recruiter-friendly keywords\n- Make it short and high impact\n- Include specialization and value proposition\n- Avoid emojis\n\nOutput format:\n1) Headline\n2) Keywords used",
+    "tags": ["linkedin", "india", "headline", "job"]
+  },
+  {
+    "slug": "tcs-interview-prep",
+    "title": "TCS Interview Preparation Prompt (HR + Technical)",
+    "category": "Interview",
+    "description": "Practice for a TCS interview with realistic HR and technical questions.",
+    "prompt": "Act as a senior interviewer at TCS.\n\nAsk me 15 interview questions:\n- 5 HR questions\n- 5 technical questions\n- 5 situational questions\n\nAfter each answer:\n- rate my answer out of 10\n- explain weaknesses\n- provide an improved answer\n\nMy profile:\n\n[PASTE ROLE + EXPERIENCE]",
+    "tags": ["tcs", "interview", "india", "hr"]
+  },
+  {
+    "slug": "infosys-interview-prep",
+    "title": "Infosys Interview Preparation Prompt",
+    "category": "Interview",
+    "description": "Prepare for Infosys interviews with HR + technical Q&A simulation.",
+    "prompt": "Act as an Infosys technical interviewer.\n\nSimulate an Infosys interview for this role:\n\nRole: [ROLE]\nExperience: [FRESHER / 1 YEAR / etc]\nSkills: [SKILLS]\n\nRules:\n- Ask one question at a time\n- Wait for my answer\n- Provide feedback and an ideal answer\n- Include HR + coding + project questions",
+    "tags": ["infosys", "interview", "india"]
+  },
+  {
+    "slug": "upwork-proposal-india",
+    "title": "Upwork Proposal Prompt for Indian Freelancers",
+    "category": "Freelancing",
+    "description": "Generate winning Upwork proposals optimized for Indian freelancers.",
+    "prompt": "Act as a top-rated Upwork freelancer from India.\n\nWrite a professional Upwork proposal for this job post:\n\n[PASTE JOB POST]\n\nRules:\n- Be short (150-250 words)\n- Include a clear plan\n- Include relevant portfolio points\n- Add a strong CTA\n- Use polite professional tone\n\nOutput:\n- Proposal\n- 3 subject line options",
+    "tags": ["upwork", "freelancing", "india"]
+  },
+  {
+    "slug": "fiverr-gig-description-india",
+    "title": "Fiverr Gig Description Prompt (India)",
+    "category": "Freelancing",
+    "description": "Create a Fiverr gig description optimized for Indian sellers and global buyers.",
+    "prompt": "Act as a Fiverr gig optimization expert.\n\nCreate a high-converting Fiverr gig description for:\n\nService: [SERVICE]\nTarget Audience: [WHO]\n\nRules:\n- Use bullet points\n- Include benefits and deliverables\n- Include 3 packages: Basic / Standard / Premium\n- Include SEO keywords\n- Keep it professional\n\nOutput:\n- Title\n- Description\n- Packages",
+    "tags": ["fiverr", "gig", "india", "freelancing"]
+  },
+  {
+    "slug": "cold-email-client-outreach-india",
+    "title": "Cold Email Prompt for Client Outreach (India)",
+    "category": "Business",
+    "description": "Write cold emails to find international clients as an Indian freelancer or agency.",
+    "prompt": "Act as a business development expert for Indian freelancers.\n\nWrite 3 cold outreach emails to get clients.\n\nService: [SERVICE]\nTarget Industry: [INDUSTRY]\nClient Type: [SMALL BUSINESS / STARTUP]\n\nRules:\n- Short and confident\n- Not spammy\n- Add personalization placeholders\n- Add a CTA\n\nOutput:\nEmail 1: soft\nEmail 2: direct\nEmail 3: follow-up",
+    "tags": ["cold email", "india", "client", "outreach"]
+  },
+  {
+    "slug": "youtube-script-hinglish",
+    "title": "YouTube Script Prompt (Hinglish) for Indian Audience",
+    "category": "YouTube",
+    "description": "Generate viral YouTube scripts in Hinglish (Hindi-English mix) for India.",
+    "prompt": "Act as a viral YouTube scriptwriter for Indian audiences.\n\nWrite a 3-5 minute Hinglish YouTube script about:\n\nTopic: [TOPIC]\n\nRules:\n- Strong hook in first 5 seconds\n- Hinglish style, simple language\n- Include relatable Indian examples\n- Use storytelling\n- End with CTA (like, subscribe)\n\nFormat:\n- Hook\n- Intro\n- Main points\n- Outro",
+    "tags": ["youtube", "hinglish", "india", "script"]
+  },
+  {
+    "slug": "instagram-reels-script-india",
+    "title": "Instagram Reels Script Prompt (India)",
+    "category": "Instagram",
+    "description": "Create Instagram reels scripts optimized for Indian viewers.",
+    "prompt": "Act as an Instagram Reels scriptwriter for Indian audiences.\n\nCreate 10 reels scripts about:\n\nTopic: [TOPIC]\n\nRules:\n- Each script max 20 seconds\n- Hook in first 2 seconds\n- Add CTA at end\n- Simple Hinglish tone\n- Include captions text\n\nOutput format:\n1) Hook\n2) Script\n3) Caption",
+    "tags": ["instagram", "reels", "india"]
+  },
+  {
+    "slug": "viral-hooks-india",
+    "title": "Viral Hook Generator Prompt (India)",
+    "category": "Content",
+    "description": "Generate viral hooks for Indian YouTube and Instagram content.",
+    "prompt": "Act as a viral marketing expert for Indian audiences.\n\nGenerate 30 viral hooks for this topic:\n\n[TOPIC]\n\nRules:\n- Mix curiosity + shock + value\n- Keep hooks short\n- Hinglish allowed\n- Suitable for India\n\nOutput:\n- Hook\n- Why it works",
+    "tags": ["viral", "hooks", "india", "marketing"]
+  },
+  {
+    "slug": "study-notes-generator-india",
+    "title": "Study Notes Generator Prompt (Indian Students)",
+    "category": "Study",
+    "description": "Turn textbook content into clear study notes for Indian students.",
+    "prompt": "Act as a teacher for Indian students.\n\nConvert this text into study notes.\n\nText:\n[PASTE HERE]\n\nRules:\n- Use simple language\n- Use bullet points\n- Highlight important terms\n- Add 10 MCQ questions at the end\n- Add a short summary",
+    "tags": ["study", "notes", "india", "students"]
+  },
+  {
+    "slug": "exam-revision-plan-india",
+    "title": "Exam Revision Plan Prompt (India)",
+    "category": "Study",
+    "description": "Generate a realistic exam revision plan for Indian students.",
+    "prompt": "Act as an academic planner for Indian students.\n\nCreate a revision plan.\n\nExam: [EXAM NAME]\nDays left: [NUMBER]\nSubjects: [LIST]\nHours per day: [NUMBER]\n\nRules:\n- Make timetable\n- Include revision + mock tests\n- Include rest and breaks\n- Include weekly milestones",
+    "tags": ["exam", "revision", "india", "study"]
+  },
+  {
+    "slug": "ielts-speaking-practice-india",
+    "title": "IELTS Speaking Practice Prompt (India)",
+    "category": "IELTS",
+    "description": "Practice IELTS speaking with a simulated examiner and feedback.",
+    "prompt": "Act as an IELTS speaking examiner.\n\nSimulate IELTS speaking test.\n\nRules:\n- Ask me Part 1 questions first\n- Wait for my answer\n- Correct grammar and pronunciation suggestions\n- Give band score estimate\n\nStart now.",
+    "tags": ["ielts", "india", "speaking"]
+  },
+  {
+    "slug": "business-plan-india",
+    "title": "Business Plan Generator Prompt (India)",
+    "category": "Startup",
+    "description": "Generate a business plan for an Indian startup idea.",
+    "prompt": "Act as a startup advisor in India.\n\nCreate a complete business plan for:\n\nIdea: [IDEA]\nCity/State: [LOCATION]\nTarget Customers: [CUSTOMERS]\nBudget in INR: [BUDGET]\n\nInclude:\n- Market analysis India\n- Competitor analysis\n- Revenue model\n- Marketing strategy\n- Legal considerations\n- Financial projections",
+    "tags": ["business plan", "startup", "india"]
+  },
+  {
+    "slug": "seo-blog-post-india",
+    "title": "SEO Blog Post Prompt (India)",
+    "category": "SEO",
+    "description": "Write SEO blog posts optimized for Indian traffic and Google ranking.",
+    "prompt": "Act as an SEO content writer targeting India.\n\nWrite a 1200-word blog post about:\n\nKeyword: [KEYWORD]\nTarget city (optional): [CITY]\n\nRules:\n- Use proper H1, H2, H3\n- Include FAQ section\n- Use simple English\n- Mention India-specific examples\n- Include meta title + meta description\n\nOutput:\n- Title\n- Meta Title\n- Meta Description\n- Article",
+    "tags": ["seo", "blog", "india"]
+  },
+  {
+    "slug": "cover-letter-india",
+    "title": "Cover Letter Prompt (India)",
+    "category": "Resume",
+    "description": "Generate professional cover letters optimized for Indian recruiters.",
+    "prompt": "Act as a professional cover letter writer in India.\n\nWrite a cover letter for this job:\n\nJob Description:\n[PASTE HERE]\n\nMy profile:\n[PASTE HERE]\n\nRules:\n- Professional tone\n- Mention key skills\n- Keep it under 250 words\n- End with strong CTA",
+    "tags": ["cover letter", "india", "job"]
+  },
+  {
+    "slug": "salary-negotiation-india",
+    "title": "Salary Negotiation Prompt (India, INR)",
+    "category": "Career",
+    "description": "Prepare for salary negotiation conversations in India using INR ranges.",
+    "prompt": "Act as a career coach in India.\n\nHelp me negotiate salary.\n\nRole: [ROLE]\nExperience: [YEARS]\nCurrent salary (INR): [NUMBER]\nExpected salary (INR): [NUMBER]\nCompany type: [STARTUP / MNC]\n\nGive:\n- negotiation script\n- email template\n- do's and don'ts\n- fallback strategy",
+    "tags": ["salary", "negotiation", "india", "inr"]
+  },
+  {
+    "slug": "coding-debugger-prompt",
+    "title": "Coding Debugger Prompt (Explain Like an Interviewer)",
+    "category": "Coding",
+    "description": "Debug code like an interviewer: find bugs, explain fixes, and improve performance.",
+    "prompt": "Act as a senior software engineer interviewer.\n\nAnalyze this code:\n\n[PASTE CODE]\n\nTasks:\n- Identify bugs\n- Explain what is wrong\n- Provide corrected code\n- Suggest optimizations\n- Explain time complexity\n\nOutput format:\n1) Bugs\n2) Fix\n3) Improved version\n4) Complexity",
+    "tags": ["coding", "debugging", "interview"]
+  }
+]
