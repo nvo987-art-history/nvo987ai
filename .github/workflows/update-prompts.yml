@@ -21,6 +21,9 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Generate India prompts.json database
+        run: python tools/generate_india_prompts_json.py
+
       - name: Generate prompt pages + sitemap + robots
         run: python tools/generate_prompts.py
 
@@ -29,7 +32,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add prompts sitemap.xml robots.txt
+          git add data/prompts.json prompts sitemap.xml robots.txt
 
-          git diff --cached --quiet || git commit -m "Auto-generate prompt pages"
+          git diff --cached --quiet || git commit -m "Auto-generate prompt pages (India)"
           git push
