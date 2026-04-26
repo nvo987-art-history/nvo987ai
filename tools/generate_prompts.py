@@ -2,20 +2,16 @@
 # ==========================================================
 # FILE: tools/generate_prompts.py
 # NVO987 AI – Prompt Generator (India)
-#
-# Generates:
-#   - /prompts/*.html pages from data/prompts.json
-#   - /prompts/index.html (prompt directory)
-#   - /index.html Quick Access section (auto updated)
-#   - sitemap.xml (root)
-#   - robots.txt (root)
-#
-# GitHub Pages compatible / 100% static / Privacy-first
+# Generates static prompt pages from data/prompts.json
+# Uses prompts/template.html placeholders
+# Generates paginated index pages (25 per page)
+# Generates sitemap.xml + robots.txt in root
+# GitHub Pages compatible / Privacy-first
 # ==========================================================
 
 import os
 import json
-import re
+import math
 from datetime import datetime
 
 
@@ -28,11 +24,12 @@ DATA_FILE = "data/prompts.json"
 TEMPLATE_FILE = "prompts/template.html"
 
 OUTPUT_DIR = "prompts"
-PROMPTS_INDEX_FILE = "prompts/index.html"
+PAGES_DIR = "prompts/page"
 
-ROOT_INDEX_FILE = "index.html"
 SITEMAP_FILE = "sitemap.xml"
 ROBOTS_FILE = "robots.txt"
+
+PROMPTS_PER_PAGE = 25
 
 
 # ----------------------------
@@ -55,18 +52,12 @@ def normalize_slug(slug: str) -> str:
     """
     Ensures slug is always in this format:
       /prompts/filename.html
-
-    Accepts:
-      - "bug-fixing.html"
-      - "/bug-fixing.html"
-      - "/prompts/bug-fixing.html"
-      - "prompts/bug-fixing.html"
-      - full URL with domain
     """
     if not slug:
         return ""
 
     slug = slug.strip()
+
     slug = slug.replace(BASE_URL, "")
 
     if not slug.startswith("/"):
@@ -87,19 +78,18 @@ def normalize_slug(slug: str) -> str:
 
 
 def extract_filename_from_slug(slug: str) -> str:
-    """ /prompts/bug-fixing-assistant.html -> bug-fixing-assistant.html """
+    """ /prompts/example.html -> example.html """
     return slug.split("/")[-1]
 
 
 def extract_slug_id_from_filename(filename: str) -> str:
-    """ bug-fixing-assistant.html -> bug-fixing-assistant """
+    """ example.html -> example """
     if filename.endswith(".html"):
         return filename[:-5]
     return filename
 
 
 def build_keywords(item: dict) -> str:
-    """Generate keywords meta field from title + category + tags."""
     tags = item.get("tags", [])
     category = item.get("category", "")
     title = item.get("title", "")
@@ -136,29 +126,21 @@ def build_keywords(item: dict) -> str:
 
 
 def build_tags_string(tags) -> str:
-    """Return tags as readable string."""
     if not tags:
         return ""
     return ", ".join([str(t) for t in tags])
 
 
 def write_file(path: str, content: str):
-    """Write UTF-8 file safely."""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
-
-
-def read_file(path: str) -> str:
-    """Read UTF-8 file safely."""
-    with open(path, "r", encoding="utf-8") as f:
-        return f.read()
 
 
 # ----------------------------
 # SITEMAP.XML
 # ----------------------------
 def generate_sitemap(urls: list) -> str:
-    """Generate sitemap.xml content."""
     now = datetime.utcnow().strftime("%Y-%m-%d")
 
     out = []
@@ -180,7 +162,6 @@ def generate_sitemap(urls: list) -> str:
 # ROBOTS.TXT
 # ----------------------------
 def generate_robots() -> str:
-    """Generate robots.txt for indexing."""
     return f"""User-agent: *
 Allow: /
 
@@ -191,57 +172,80 @@ Sitemap: {BASE_URL}/sitemap.xml
 
 
 # ----------------------------
-# PROMPTS INDEX PAGE
+# INDEX PAGE GENERATOR (WITH SEARCH + PAGINATION)
 # ----------------------------
-def generate_prompts_index_html(prompts: list) -> str:
-    """Generate prompts/index.html listing page."""
-    today = datetime.utcnow().strftime("%Y-%m-%d")
+def build_prompt_index_page(prompts, page_num, total_pages, today):
+    """
+    Generates paginated HTML index with search filter.
+    """
 
+    # Build prompt cards HTML
     cards = []
-
     for item in prompts:
         title = safe_escape_html(item.get("title", "Untitled"))
         description = safe_escape_html(item.get("description", ""))
         category = safe_escape_html(item.get("category", "prompt"))
         tags = item.get("tags", [])
-        tags_string = safe_escape_html(build_tags_string(tags))
+        tags_str = safe_escape_html(", ".join(tags)) if tags else ""
 
         slug = normalize_slug(item.get("slug", ""))
-        if not slug:
-            continue
-
-        filename = extract_filename_from_slug(slug)
+        url = slug.replace("/prompts/", "")  # local link
 
         cards.append(f"""
-        <article class="place-card">
-          <div class="place-type">{category.capitalize()}</div>
+        <article class="place-card prompt-card"
+          data-title="{title.lower()}"
+          data-description="{description.lower()}"
+          data-category="{category.lower()}"
+          data-tags="{tags_str.lower()}">
+
+          <div class="place-type">{category.upper()}</div>
           <h3>{title}</h3>
           <p class="place-desc">{description}</p>
-          <p class="small-note muted">Tags: <strong>{tags_string}</strong></p>
+          <p class="small-note muted">Tags: {tags_str}</p>
+
           <div class="place-actions">
-            <a class="btn" href="{filename}">Open Prompt</a>
+            <a class="btn" href="../{url}">Open Prompt</a>
           </div>
         </article>
         """)
 
     cards_html = "\n".join(cards)
 
-    return f"""<!DOCTYPE html>
+    # Pagination links
+    pagination_links = []
+
+    if page_num > 1:
+        pagination_links.append(f'<a class="btn secondary" href="{page_num-1}.html">← Previous</a>')
+    else:
+        pagination_links.append(f'<span class="btn secondary disabled">← Previous</span>')
+
+    pagination_links.append(f'<span class="page-indicator">Page {page_num} / {total_pages}</span>')
+
+    if page_num < total_pages:
+        pagination_links.append(f'<a class="btn secondary" href="{page_num+1}.html">Next →</a>')
+    else:
+        pagination_links.append(f'<span class="btn secondary disabled">Next →</span>')
+
+    pagination_html = "\n".join(pagination_links)
+
+    # HTML page output
+    html = f"""<!DOCTYPE html>
 <html lang="en-IN">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Prompt Library Index | NVO987 AI</title>
-  <meta name="description" content="Browse the full NVO987 AI prompt directory. 100% static and privacy-first.">
+  <title>Prompt Library Index – Page {page_num} | NVO987 AI</title>
+  <meta name="description" content="Browse NVO987 AI prompts for India. Search by category, tags, and keywords. Page {page_num} of {total_pages}.">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#f6f1e9">
-  <link rel="canonical" href="{BASE_URL}/prompts/index.html">
+  <meta name="color-scheme" content="light">
+  <link rel="canonical" href="{BASE_URL}/prompts/page/{page_num}.html">
 
-  <link rel="icon" href="../favicon.ico" sizes="any">
-  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="stylesheet" href="../../style.css">
 </head>
 
 <body>
@@ -249,19 +253,17 @@ def generate_prompts_index_html(prompts: list) -> str:
   <div class="topbar">
     <div class="container">
       <div class="topbar-inner">
-
         <div class="brand">
           <span class="brand-name">NVO987 AI</span>
           <span class="brand-tag">Prompt Library · India</span>
         </div>
 
         <nav class="nav">
-          <a href="../index.html">Home</a>
-          <a href="index.html">Prompts</a>
-          <a href="../legal.html">Legal</a>
-          <a href="../contact.html">Contact</a>
+          <a href="../../index.html">Home</a>
+          <a href="../index.html">Prompts</a>
+          <a href="../../legal.html">Legal</a>
+          <a href="../../contact.html">Contact</a>
         </nav>
-
       </div>
     </div>
   </div>
@@ -278,8 +280,25 @@ def generate_prompts_index_html(prompts: list) -> str:
       </section>
 
       <section class="section">
-        <div class="grid">
+        <div class="legal-card">
+          <h2>Search prompts</h2>
+          <input id="searchBox" type="text" placeholder="Search prompts (title, category, tags)..."
+            style="width:100%; padding:14px; font-size:16px; border-radius:12px; border:1px solid #ccc;">
+          <p class="small-note muted" style="margin-top:10px;">
+            Works instantly. No tracking. No analytics. Search runs only in your browser.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="grid" id="promptGrid">
           {cards_html}
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="legal-card" style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+          {pagination_html}
         </div>
       </section>
 
@@ -290,92 +309,50 @@ def generate_prompts_index_html(prompts: list) -> str:
     <div class="container footer-inner">
       <p>
         © <span id="year"></span> NVO987 AI Prompt Library (India) ·
-        <a href="../index.html">Home</a> ·
-        <a href="index.html">Prompts</a> ·
-        <a href="../legal.html">Legal</a> ·
-        <a href="../contact.html">Contact</a>
+        <a href="../../index.html">Home</a> ·
+        <a href="../index.html">Prompts</a> ·
+        <a href="../../legal.html">Legal</a> ·
+        <a href="../../contact.html">Contact</a>
       </p>
+
       <p class="small-note muted">
-        100% static website. No cookies. No tracking. No analytics.
+        100% static website. No cookies. No tracking. No analytics. No profiling.
       </p>
     </div>
   </footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    const searchBox = document.getElementById("searchBox");
+    const cards = document.querySelectorAll(".prompt-card");
+
+    searchBox.addEventListener("input", () => {{
+      const q = searchBox.value.toLowerCase().trim();
+
+      cards.forEach(card => {{
+        const text =
+          (card.dataset.title || "") +
+          " " +
+          (card.dataset.description || "") +
+          " " +
+          (card.dataset.category || "") +
+          " " +
+          (card.dataset.tags || "");
+
+        if (text.includes(q)) {{
+          card.style.display = "";
+        }} else {{
+          card.style.display = "none";
+        }}
+      }});
+    }});
   </script>
 
 </body>
 </html>
 """
-
-
-# ----------------------------
-# ROOT INDEX QUICK ACCESS UPDATE
-# ----------------------------
-def build_quick_access_html(prompts: list, max_items: int = 6) -> str:
-    """Generate the Quick Access card grid for index.html."""
-    cards = []
-
-    for item in prompts[:max_items]:
-        title = safe_escape_html(item.get("title", "Untitled"))
-        description = safe_escape_html(item.get("description", ""))
-        category = safe_escape_html(item.get("category", "prompt"))
-
-        slug = normalize_slug(item.get("slug", ""))
-        if not slug:
-            continue
-
-        filename = extract_filename_from_slug(slug)
-
-        cards.append(f"""
-        <article class="place-card">
-          <div class="place-type">{category.capitalize()}</div>
-          <h3>{title}</h3>
-          <p class="place-desc">{description}</p>
-          <div class="place-actions">
-            <a class="btn" href="prompts/{filename}">Open Prompt</a>
-          </div>
-        </article>
-        """)
-
-    return "\n".join(cards)
-
-
-def update_root_index_html(prompts: list):
-    """
-    Updates ONLY the Quick Access grid in index.html.
-    It searches for markers:
-
-      <!-- QUICK_ACCESS_START -->
-      ...
-      <!-- QUICK_ACCESS_END -->
-
-    Everything between them will be replaced.
-    """
-    if not os.path.exists(ROOT_INDEX_FILE):
-        print("Skipping root index update: index.html not found.")
-        return
-
-    html = read_file(ROOT_INDEX_FILE)
-
-    quick_access_cards = build_quick_access_html(prompts, max_items=6)
-
-    replacement_block = f"""<!-- QUICK_ACCESS_START -->
-<div class="grid">
-{quick_access_cards}
-</div>
-<!-- QUICK_ACCESS_END -->"""
-
-    pattern = r"<!-- QUICK_ACCESS_START -->(.*?)<!-- QUICK_ACCESS_END -->"
-    if not re.search(pattern, html, flags=re.DOTALL):
-        print("WARNING: index.html does not contain QUICK_ACCESS markers.")
-        print("Add these markers in index.html to enable auto-update.")
-        return
-
-    html_new = re.sub(pattern, replacement_block, html, flags=re.DOTALL)
-    write_file(ROOT_INDEX_FILE, html_new)
-    print("Updated: index.html Quick Access section")
+    return html
 
 
 # ----------------------------
@@ -388,7 +365,8 @@ def main():
     if not os.path.exists(TEMPLATE_FILE):
         raise FileNotFoundError(f"Missing: {TEMPLATE_FILE}")
 
-    template_html = read_file(TEMPLATE_FILE)
+    with open(TEMPLATE_FILE, "r", encoding="utf-8") as f:
+        template_html = f.read()
 
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         prompts = json.load(f)
@@ -397,12 +375,15 @@ def main():
         raise ValueError("prompts.json must be a JSON array")
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
+    os.makedirs(PAGES_DIR, exist_ok=True)
 
     today = datetime.utcnow().strftime("%Y-%m-%d")
 
     generated_urls = []
 
-    # Generate each prompt page
+    # ----------------------------
+    # GENERATE PROMPT PAGES
+    # ----------------------------
     for item in prompts:
         title = item.get("title", "").strip()
         description = item.get("description", "").strip()
@@ -448,25 +429,51 @@ def main():
         html = html.replace("{{CATEGORY}}", safe_category)
         html = html.replace("{{TAGS}}", safe_tags)
         html = html.replace("{{PROMPT_TEXT}}", safe_prompt_text)
-
-        # Template expects: /prompts/{{SLUG}}.html
         html = html.replace("{{SLUG}}", slug_id)
 
         html = html.replace("{{DATE_PUBLISHED}}", today)
         html = html.replace("{{DATE_MODIFIED}}", today)
 
         write_file(out_path, html)
-        print(f"Generated: {out_path}")
 
-    # Generate prompts/index.html
-    prompts_index_html = generate_prompts_index_html(prompts)
-    write_file(PROMPTS_INDEX_FILE, prompts_index_html)
-    print(f"Generated: {PROMPTS_INDEX_FILE}")
+        print(f"Generated prompt: {out_path}")
 
-    # Update root index.html Quick Access section
-    update_root_index_html(prompts)
+    # ----------------------------
+    # GENERATE PAGINATED INDEX
+    # ----------------------------
+    total_prompts = len(prompts)
+    total_pages = max(1, math.ceil(total_prompts / PROMPTS_PER_PAGE))
 
-    # Generate sitemap.xml
+    for page_num in range(1, total_pages + 1):
+        start = (page_num - 1) * PROMPTS_PER_PAGE
+        end = start + PROMPTS_PER_PAGE
+        page_items = prompts[start:end]
+
+        page_html = build_prompt_index_page(page_items, page_num, total_pages, today)
+
+        out_page_path = os.path.join(PAGES_DIR, f"{page_num}.html")
+        write_file(out_page_path, page_html)
+
+        print(f"Generated index page: {out_page_path}")
+
+    # prompts/index.html should match page/1.html
+    index_html_path = os.path.join(OUTPUT_DIR, "index.html")
+    first_page_path = os.path.join(PAGES_DIR, "1.html")
+
+    with open(first_page_path, "r", encoding="utf-8") as f:
+        first_page_html = f.read()
+
+    # Fix canonical to prompts/index.html
+    first_page_html = first_page_html.replace(
+        f'{BASE_URL}/prompts/page/1.html',
+        f'{BASE_URL}/prompts/index.html'
+    )
+
+    write_file(index_html_path, first_page_html)
+
+    # ----------------------------
+    # STATIC URLS FOR SITEMAP
+    # ----------------------------
     static_urls = [
         f"{BASE_URL}/",
         f"{BASE_URL}/index.html",
@@ -475,8 +482,14 @@ def main():
         f"{BASE_URL}/contact.html",
     ]
 
-    all_urls = static_urls + generated_urls
+    # Add pagination URLs
+    pagination_urls = []
+    for page_num in range(1, total_pages + 1):
+        pagination_urls.append(f"{BASE_URL}/prompts/page/{page_num}.html")
 
+    all_urls = static_urls + pagination_urls + generated_urls
+
+    # Remove duplicates preserving order
     seen = set()
     final_urls = []
     for u in all_urls:
@@ -487,14 +500,15 @@ def main():
     sitemap_content = generate_sitemap(final_urls)
     write_file(SITEMAP_FILE, sitemap_content)
 
-    # Generate robots.txt
     robots_content = generate_robots()
     write_file(ROBOTS_FILE, robots_content)
 
-    print("\nDONE.")
+    print("\n===============================")
     print(f"Generated prompt pages: {len(generated_urls)}")
-    print(f"Updated: {SITEMAP_FILE}")
-    print(f"Updated: {ROBOTS_FILE}")
+    print(f"Generated index pages: {total_pages}")
+    print(f"Updated sitemap: {SITEMAP_FILE}")
+    print(f"Updated robots: {ROBOTS_FILE}")
+    print("===============================")
 
 
 if __name__ == "__main__":
