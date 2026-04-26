@@ -4,6 +4,7 @@
    Luxury UI / consistent typography / mobile-first responsive
    + DID footer support (identity.nvo987.us)
    + MOBILE SAFE AREA FIX (logo not cut on left)
+   + INDIA EDITION OVERLAY (india.png watermark + saffron/green accents)
    ========================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap");
@@ -35,6 +36,11 @@
 
   --fontBody: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --fontTitle: "Playfair Display", Georgia, "Times New Roman", serif;
+
+  /* INDIA EDITION COLORS (SUBTLE) */
+  --india-saffron: #ff9933;
+  --india-green: #138808;
+  --india-navy: #000080;
 }
 
 /* ==========================================================
@@ -58,6 +64,49 @@ body {
     radial-gradient(circle at top left, rgba(212,175,55,0.12), transparent 45%),
     radial-gradient(circle at bottom right, rgba(122,31,43,0.12), transparent 50%),
     linear-gradient(180deg, var(--bg), var(--bg2));
+
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* INDIA EDITION WATERMARK (SAFE, DOES NOT BREAK CONTENT) */
+body::before {
+  content: "";
+  position: fixed;
+  top: -160px;
+  right: -220px;
+  width: 900px;
+  height: 900px;
+
+  background-image: url("/india.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: -1;
+
+  filter: grayscale(100%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  bottom: -260px;
+  left: -260px;
+  width: 900px;
+  height: 900px;
+
+  background-image: url("/india.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: -1;
+
+  filter: grayscale(100%);
+  transform: rotate(180deg);
 }
 
 /* Global typography consistency */
@@ -100,7 +149,7 @@ img {
   background: rgba(246, 241, 233, 0.92);
   backdrop-filter: blur(14px);
 
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 2px solid rgba(255, 153, 51, 0.22);
   box-shadow: 0 10px 25px rgba(0,0,0,0.04);
 
   /* SAFE AREA FIX (prevents logo cut on left/right on mobile) */
@@ -170,8 +219,8 @@ img {
 
 .nav a:hover {
   transform: translateY(-1px);
-  background: rgba(212,175,55,0.14);
-  border-color: rgba(212,175,55,0.55);
+  background: rgba(255, 153, 51, 0.14);
+  border-color: rgba(255, 153, 51, 0.55);
   color: var(--burgundy);
   box-shadow: 0 12px 25px rgba(0,0,0,0.06);
 }
@@ -234,6 +283,10 @@ img {
 
   color: #fff;
   text-shadow: 0 6px 18px rgba(0,0,0,0.65);
+
+  display: inline-block;
+  padding-bottom: 6px;
+  border-bottom: 4px solid rgba(255, 153, 51, 0.28);
 }
 
 .hero-sub {
@@ -286,7 +339,11 @@ img {
   bottom: 14px;
   width: 4px;
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(212,175,55,0.95), rgba(122,31,43,0.65));
+  background: linear-gradient(
+    180deg,
+    rgba(255, 153, 51, 0.95),
+    rgba(19, 136, 8, 0.65)
+  );
 }
 
 .section-header h2 {
@@ -342,8 +399,8 @@ img {
 
 .controls input:focus,
 .controls select:focus {
-  border-color: rgba(212,175,55,0.75);
-  box-shadow: 0 0 0 4px rgba(212,175,55,0.20);
+  border-color: rgba(255, 153, 51, 0.70);
+  box-shadow: 0 0 0 4px rgba(255, 153, 51, 0.18);
 }
 
 /* ==========================================================
@@ -381,7 +438,7 @@ img {
 .place-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 22px 60px rgba(0,0,0,0.14);
-  border-color: rgba(212,175,55,0.45);
+  border-color: rgba(255, 153, 51, 0.40);
 }
 
 .place-type {
@@ -398,8 +455,8 @@ img {
   padding: 6px 12px;
   border-radius: 999px;
 
-  background: rgba(212,175,55,0.18);
-  border: 1px solid rgba(212,175,55,0.35);
+  background: rgba(255, 153, 51, 0.14);
+  border: 1px solid rgba(255, 153, 51, 0.28);
 }
 
 .place-card h3 {
@@ -449,8 +506,8 @@ img {
 }
 
 .pill.highlight {
-  background: rgba(212,175,55,0.20);
-  border: 1px solid rgba(212,175,55,0.40);
+  background: rgba(255, 153, 51, 0.18);
+  border: 1px solid rgba(255, 153, 51, 0.32);
   color: var(--burgundy);
 }
 
@@ -512,9 +569,9 @@ img {
 
 .btn:hover {
   transform: translateY(-1px);
-  background: linear-gradient(180deg, rgba(212,175,55,0.95), rgba(122,31,43,0.92));
+  background: linear-gradient(180deg, rgba(19, 136, 8, 0.85), rgba(255, 153, 51, 0.92));
   color: #fff;
-  border-color: rgba(212,175,55,0.70);
+  border-color: rgba(19, 136, 8, 0.45);
 }
 
 .btn.secondary {
@@ -524,8 +581,8 @@ img {
 }
 
 .btn.secondary:hover {
-  background: rgba(122,31,43,0.12);
-  border-color: rgba(122,31,43,0.40);
+  background: rgba(255, 153, 51, 0.12);
+  border-color: rgba(255, 153, 51, 0.35);
   color: var(--burgundy);
 }
 
@@ -627,7 +684,7 @@ a:hover {
   padding: 36px 0;
 
   background: rgba(246,241,233,0.80);
-  border-top: 1px solid rgba(0,0,0,0.10);
+  border-top: 2px solid rgba(19, 136, 8, 0.18);
 }
 
 .footer-inner {
@@ -777,4 +834,4 @@ a:hover {
     width: 100%;
     max-width: 460px;
   }
-   }
+}
