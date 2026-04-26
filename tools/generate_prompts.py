@@ -1,181 +1,153 @@
+# ==========================================================
+# FILE: tools/generate_prompts.py
+# NVO987 AI – Static Prompt Page Generator (India)
+# Generates:
+#   - /prompts/*.html from prompts/template.html
+#   - sitemap.xml (auto updated)
+#   - robots.txt (auto updated)
+# Compatible with GitHub Actions + GitHub Pages
+# ==========================================================
+
 import os
 import json
 from datetime import datetime
 
+
 BASE_URL = "https://nvo987.ai.in"
+
 OUTPUT_DIR = "prompts"
 DATA_FILE = "data/prompts.json"
+TEMPLATE_FILE = "prompts/template.html"
 
-STYLE_PATH = "../style.css"
-BANNER_IMAGE = "https://nvo987.ai.in/banner.jpg"
+SITEMAP_FILE = "sitemap.xml"
+ROBOTS_FILE = "robots.txt"
 
 
-HTML_TEMPLATE = """<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+def safe_html(text: str) -> str:
+    if text is None:
+        return ""
+    return (
+        str(text)
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+    )
 
-  <title>{title} | NVO987 AI Prompt Library</title>
 
-  <meta name="description" content="{meta_description}" />
-  <meta name="robots" content="index, follow" />
-  <meta name="referrer" content="no-referrer" />
-  <meta name="color-scheme" content="light" />
-  <meta name="format-detection" content="telephone=no" />
+def normalize_slug(slug: str) -> str:
+    """
+    Supports:
+      "bug-fixing"
+      "bug-fixing.html"
+      "/prompts/bug-fixing.html"
+      "prompts/bug-fixing.html"
+    Returns:
+      "bug-fixing"
+    """
+    if not slug:
+        return ""
 
-  <link rel="canonical" href="{canonical}" />
+    slug = slug.strip().replace("\\", "/")
 
-  <meta property="og:site_name" content="NVO987 AI Prompt Library (India)" />
-  <meta property="og:title" content="{title}" />
-  <meta property="og:description" content="{meta_description}" />
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="{canonical}" />
-  <meta property="og:image" content="{banner_image}" />
-  <meta property="og:locale" content="en_IN" />
+    if slug.startswith("/"):
+        slug = slug[1:]
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{title}" />
-  <meta name="twitter:description" content="{meta_description}" />
-  <meta name="twitter:image" content="{banner_image}" />
+    if slug.startswith("prompts/"):
+        slug = slug[len("prompts/"):]
 
-  <link rel="stylesheet" href="{style_path}" />
-  <link rel="icon" href="/favicon.ico" sizes="any" />
+    if slug.endswith(".html"):
+        slug = slug[:-5]
 
-  <!-- JSON-LD Schema -->
-  <script type="application/ld+json">
-  {{
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "{title}",
-    "description": "{meta_description}",
-    "author": {{
-      "@type": "Organization",
-      "name": "NVO987"
-    }},
-    "publisher": {{
-      "@type": "Organization",
-      "name": "NVO987",
-      "url": "https://nvo987.ai.in"
-    }},
-    "datePublished": "{date_published}",
-    "mainEntityOfPage": "{canonical}"
-  }}
-  </script>
-</head>
-
-<body>
-
-  <div class="topbar">
-    <div class="container">
-      <div class="topbar-inner">
-
-        <div class="brand">
-          <span class="brand-name">NVO987 AI</span>
-          <span class="brand-tag">Prompt Library (India)</span>
-        </div>
-
-        <nav class="nav">
-          <a href="/index.html">Home</a>
-          <a href="/prompts/index.html">Prompts</a>
-          <a href="/legal.html">Legal</a>
-          <a href="/contact.html">Contact</a>
-        </nav>
-
-      </div>
-    </div>
-  </div>
-
-  <main class="main">
-    <div class="container">
-
-      <section class="section">
-        <div class="section-header">
-          <h2>{title}</h2>
-          <p>{description}</p>
-        </div>
-
-        <div class="legal-card">
-
-          <div class="tag-row">
-            <span class="pill">{category}</span>
-            <span class="pill highlight">NVO987 • Privacy-first</span>
-          </div>
-
-          <div class="tag-row">
-            {tags_html}
-          </div>
-
-          <h3>Prompt Template</h3>
-
-          <textarea class="prompt-box" id="promptBox" readonly>{prompt_text}</textarea>
-
-          <div class="button-row">
-            <button class="btn" onclick="copyPrompt()">Copy Prompt</button>
-            <a class="btn secondary" href="{chatgpt_link}" target="_blank" rel="noopener noreferrer">Open ChatGPT</a>
-            <a class="btn secondary" href="{gemini_link}" target="_blank" rel="noopener noreferrer">Open Gemini</a>
-          </div>
-
-          <p class="small-note">
-            This page is part of the NVO987 AI Prompt Library (India). Replace placeholders like [PASTE HERE] before use.
-          </p>
-
-          <p class="small-note muted">
-            Disclaimer: prompts are informational templates only. Always verify outputs. No cookies, no tracking, no user data collection.
-          </p>
-
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="sources-card">
-          <h3>Legal / Compliance</h3>
-          <ul>
-            <li>No registration, no user accounts.</li>
-            <li>No analytics (Google Analytics, Meta Pixel, etc.).</li>
-            <li>No advertising cookies.</li>
-            <li>Static hosting via GitHub Pages.</li>
-            <li>GDPR-friendly by design (no intentional personal data processing).</li>
-          </ul>
-
-          <p class="small-note">
-            © {year} NVO987. Code licensed under MIT. Content: prompt templates only.
-          </p>
-        </div>
-      </section>
-
-    </div>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-inner">
-      <p>© {year} NVO987 – AI Prompt Library (India)</p>
-      <p class="muted">No cookies • No tracking • Privacy-first static website</p>
-      <p><a href="/legal.html">Legal</a> • <a href="/contact.html">Contact</a></p>
-    </div>
-  </footer>
-
-  <script>
-    function copyPrompt() {{
-      const box = document.getElementById("promptBox");
-      box.select();
-      box.setSelectionRange(0, 999999);
-      navigator.clipboard.writeText(box.value);
-      alert("Prompt copied.");
-    }}
-  </script>
-
-</body>
-</html>
-"""
+    return slug
 
 
 def build_tags(tags):
+    if not tags:
+        return ""
+
     out = []
     for t in tags:
-        out.append(f'<span class="pill">{t}</span>')
+        out.append(f'<span class="pill">{safe_html(t)}</span>')
+
     return "\n            ".join(out)
+
+
+def load_template():
+    if not os.path.exists(TEMPLATE_FILE):
+        raise FileNotFoundError(f"Missing template file: {TEMPLATE_FILE}")
+
+    with open(TEMPLATE_FILE, "r", encoding="utf-8") as f:
+        return f.read()
+
+
+def generate_page(template, item, today, year):
+    title = safe_html(item.get("title", "Untitled Prompt"))
+    description = safe_html(item.get("description", ""))
+    category = safe_html(item.get("category", "general"))
+
+    tags_list = item.get("tags", [])
+    tags_string = ", ".join(tags_list) if isinstance(tags_list, list) else str(tags_list)
+    tags_string = safe_html(tags_string)
+
+    keywords = safe_html(item.get("keywords", tags_string))
+
+    prompt_text_raw = item.get("prompt_text", item.get("prompt", ""))
+    prompt_text = safe_html(prompt_text_raw)
+
+    slug_clean = normalize_slug(item.get("slug", ""))
+
+    if not slug_clean:
+        raise ValueError(f"Missing or invalid slug for item: {item.get('title')}")
+
+    canonical_url = f"{BASE_URL}/prompts/{slug_clean}.html"
+
+    # Replace placeholders in template.html
+    html = template
+    html = html.replace("{{TITLE}}", title)
+    html = html.replace("{{DESCRIPTION}}", description)
+    html = html.replace("{{CATEGORY}}", category)
+    html = html.replace("{{TAGS}}", tags_string)
+    html = html.replace("{{KEYWORDS}}", keywords)
+    html = html.replace("{{PROMPT_TEXT}}", prompt_text)
+    html = html.replace("{{SLUG}}", slug_clean)
+    html = html.replace("{{DATE_PUBLISHED}}", today)
+    html = html.replace("{{DATE_MODIFIED}}", today)
+
+    # IMPORTANT:
+    # Generated pages must be indexable (template is noindex by design)
+    html = html.replace(
+        '<meta name="robots" content="noindex, nofollow, noarchive">',
+        '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">'
+    )
+
+    return slug_clean, canonical_url, html
+
+
+def write_sitemap(urls, today):
+    with open(SITEMAP_FILE, "w", encoding="utf-8") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
+
+        # Core pages
+        f.write(f"  <url><loc>{BASE_URL}/</loc><lastmod>{today}</lastmod></url>\n")
+        f.write(f"  <url><loc>{BASE_URL}/prompts/</loc><lastmod>{today}</lastmod></url>\n")
+        f.write(f"  <url><loc>{BASE_URL}/prompts/index.html</loc><lastmod>{today}</lastmod></url>\n")
+        f.write(f"  <url><loc>{BASE_URL}/legal.html</loc><lastmod>{today}</lastmod></url>\n")
+        f.write(f"  <url><loc>{BASE_URL}/contact.html</loc><lastmod>{today}</lastmod></url>\n")
+
+        # Prompt pages
+        for url in urls:
+            f.write(f"  <url><loc>{url}</loc><lastmod>{today}</lastmod></url>\n")
+
+        f.write("</urlset>\n")
+
+
+def write_robots():
+    with open(ROBOTS_FILE, "w", encoding="utf-8") as f:
+        f.write("User-agent: *\n")
+        f.write("Allow: /\n\n")
+        f.write(f"Sitemap: {BASE_URL}/sitemap.xml\n")
 
 
 def main():
@@ -187,57 +159,30 @@ def main():
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         prompts = json.load(f)
 
+    template = load_template()
+
     today = datetime.utcnow().strftime("%Y-%m-%d")
     year = datetime.utcnow().strftime("%Y")
 
     generated_urls = []
 
     for item in prompts:
-        slug = item["slug"].strip()
-        filename = slug + ".html"
-        out_path = os.path.join(OUTPUT_DIR, filename)
+        slug_clean, canonical_url, html = generate_page(template, item, today, year)
 
-        canonical = f"{BASE_URL}/prompts/{filename}"
-
-        tags_html = build_tags(item.get("tags", []))
-
-        chatgpt_link = "https://chat.openai.com/"
-        gemini_link = "https://gemini.google.com/"
-
-        html = HTML_TEMPLATE.format(
-            title=item["title"],
-            meta_description=item["description"],
-            description=item["description"],
-            canonical=canonical,
-            banner_image=BANNER_IMAGE,
-            style_path=STYLE_PATH,
-            date_published=today,
-            year=year,
-            category=item.get("category", "Prompt"),
-            tags_html=tags_html,
-            prompt_text=item.get("prompt", "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"),
-            chatgpt_link=chatgpt_link,
-            gemini_link=gemini_link
-        )
+        out_file = slug_clean + ".html"
+        out_path = os.path.join(OUTPUT_DIR, out_file)
 
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(html)
 
-        generated_urls.append(canonical)
+        generated_urls.append(canonical_url)
 
-    # sitemap.xml
-    sitemap_path = "sitemap.xml"
-    with open(sitemap_path, "w", encoding="utf-8") as f:
-        f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
-        f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
-        f.write(f"  <url><loc>{BASE_URL}/</loc></url>\n")
-        f.write(f"  <url><loc>{BASE_URL}/prompts/index.html</loc></url>\n")
-        for url in generated_urls:
-            f.write(f"  <url><loc>{url}</loc></url>\n")
-        f.write("</urlset>\n")
+    write_sitemap(generated_urls, today)
+    write_robots()
 
     print(f"Generated {len(prompts)} prompt pages.")
     print("Updated sitemap.xml")
+    print("Updated robots.txt")
 
 
 if __name__ == "__main__":
