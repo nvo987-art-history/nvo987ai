@@ -1,0 +1,10 @@
+[
+  {
+    "slug": "ats-resume-software-engineer-india",
+    "title": "ATS Resume Prompt – Software Engineer (India)",
+    "description": "Generate a modern ATS software engineer resume optimized for the Indian tech job market.",
+    "category": "Resume",
+    "tags": ["resume", "software engineer", "india", "ats"],
+    "prompt": "Act as an expert resume writer for Indian software engineering roles.\n\nTask: Rewrite my resume for an Indian software engineer job.\n\nRules:\n- ATS friendly\n- Use metrics (% , performance, users, scale)\n- Add a strong professional summary\n- Add technical skills grouped by category\n\nResume:\n[PASTE HERE]\n"
+  }
+]
