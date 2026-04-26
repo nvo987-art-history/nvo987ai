@@ -62,9 +62,7 @@ def normalize_slug(slug: str) -> str:
     if not slug.startswith("/"):
         slug = "/" + slug
 
-    if slug.startswith("/prompts/"):
-        pass
-    else:
+    if not slug.startswith("/prompts/"):
         cleaned = slug.lstrip("/")
         if cleaned.startswith("prompts/"):
             cleaned = cleaned.replace("prompts/", "", 1)
@@ -132,9 +130,9 @@ def build_tags_string(tags) -> str:
 
 def write_file(path: str, content: str):
     """
-    FIXED:
-    If file is in root (example: sitemap.xml),
-    os.path.dirname(path) returns "" and mkdir would crash.
+    Safe write file.
+    Fix: if path has no folder (example: sitemap.xml),
+    do NOT call os.makedirs("").
     """
     folder = os.path.dirname(path)
     if folder:
@@ -179,15 +177,11 @@ Sitemap: {BASE_URL}/sitemap.xml
 
 
 # ----------------------------
-# INDEX PAGE GENERATOR (WITH SEARCH + PAGINATION)
+# INDEX PAGE GENERATOR (SEARCH + PAGINATION)
 # ----------------------------
 def build_prompt_index_page(prompts, page_num, total_pages, today):
-    """
-    Generates paginated HTML index with search filter.
-    """
-
-    # Build prompt cards HTML
     cards = []
+
     for item in prompts:
         title = safe_escape_html(item.get("title", "Untitled"))
         description = safe_escape_html(item.get("description", ""))
@@ -196,7 +190,10 @@ def build_prompt_index_page(prompts, page_num, total_pages, today):
         tags_str = safe_escape_html(", ".join(tags)) if tags else ""
 
         slug = normalize_slug(item.get("slug", ""))
-        url = slug.replace("/prompts/", "")  # local file link
+
+        # slug is /prompts/example.html
+        # from /prompts/page/1.html we need ../example.html
+        local_filename = extract_filename_from_slug(slug)
 
         cards.append(f"""
         <article class="place-card prompt-card"
@@ -211,14 +208,13 @@ def build_prompt_index_page(prompts, page_num, total_pages, today):
           <p class="small-note muted">Tags: {tags_str}</p>
 
           <div class="place-actions">
-            <a class="btn" href="../{url}">Open Prompt</a>
+            <a class="btn" href="../{local_filename}">Open Prompt</a>
           </div>
         </article>
         """)
 
     cards_html = "\n".join(cards)
 
-    # Pagination links
     pagination_links = []
 
     if page_num > 1:
@@ -235,7 +231,6 @@ def build_prompt_index_page(prompts, page_num, total_pages, today):
 
     pagination_html = "\n".join(pagination_links)
 
-    # HTML page output
     html = f"""<!DOCTYPE html>
 <html lang="en-IN">
 <head>
@@ -387,6 +382,7 @@ def main():
     today = datetime.utcnow().strftime("%Y-%m-%d")
 
     generated_urls = []
+    generated_files = []
 
     # ----------------------------
     # GENERATE PROMPT PAGES
@@ -396,7 +392,12 @@ def main():
         description = item.get("description", "").strip()
         category = item.get("category", "prompt").strip()
         tags = item.get("tags", [])
+
+        # IMPORTANT: prompt might not exist
         prompt_text = item.get("prompt", "").strip()
+
+        if not prompt_text:
+            prompt_text = f"[PROMPT MISSING]\n\nThis prompt entry has no 'prompt' field in prompts.json.\n\nTitle: {title}\nCategory: {category}\nTags: {', '.join(tags)}\n\nFix: add a 'prompt' field to this JSON item."
 
         if not title:
             print("Skipping item: missing title")
@@ -442,6 +443,7 @@ def main():
         html = html.replace("{{DATE_MODIFIED}}", today)
 
         write_file(out_path, html)
+        generated_files.append(out_path)
 
         print(f"Generated prompt: {out_path}")
 
@@ -470,7 +472,6 @@ def main():
     with open(first_page_path, "r", encoding="utf-8") as f:
         first_page_html = f.read()
 
-    # Fix canonical to prompts/index.html
     first_page_html = first_page_html.replace(
         f'{BASE_URL}/prompts/page/1.html',
         f'{BASE_URL}/prompts/index.html'
@@ -489,14 +490,12 @@ def main():
         f"{BASE_URL}/contact.html",
     ]
 
-    # Add pagination URLs
     pagination_urls = []
     for page_num in range(1, total_pages + 1):
         pagination_urls.append(f"{BASE_URL}/prompts/page/{page_num}.html")
 
     all_urls = static_urls + pagination_urls + generated_urls
 
-    # Remove duplicates preserving order
     seen = set()
     final_urls = []
     for u in all_urls:
