@@ -4,20 +4,23 @@
     "description": "Generate a modern ATS software engineer resume optimized for the Indian tech job market.",
     "category": "career",
     "slug": "/prompts/ats-resume-software-engineer-india.html",
-    "tags": ["resume", "software engineer", "india", "ats"]
+    "tags": ["resume", "software engineer", "india", "ats"],
+    "prompt": "You are an expert ATS resume writer specializing in the Indian tech job market.\n\nTASK:\nCreate a complete ATS-friendly resume for a Software Engineer in India.\n\nINPUT:\n- Candidate name: [NAME]\n- Location: [CITY, INDIA]\n- Email: [EMAIL]\n- Phone: [PHONE]\n- LinkedIn: [LINK]\n- GitHub: [GITHUB]\n- Years of experience: [YEARS]\n- Tech stack: [TECH STACK]\n- Work history: [WORK EXPERIENCE]\n- Education: [EDUCATION]\n- Projects: [PROJECTS]\n- Certifications: [CERTIFICATIONS]\n\nRULES:\n- Use clean ATS format (no tables, no icons)\n- Use strong action verbs\n- Add measurable achievements\n- Include a Skills section optimized for Indian recruiters\n- Keep it professional and modern\n\nOUTPUT:\nReturn the full resume in plain text format with clear headings."
   },
   {
     "title": "Bug Fixing Assistant Prompt",
     "description": "Debug code faster with structured error analysis and step-by-step reasoning.",
     "category": "coding",
     "slug": "/prompts/bug-fixing-assistant.html",
-    "tags": ["coding", "debug", "bugs"]
+    "tags": ["coding", "debug", "bugs"],
+    "prompt": "You are a senior software engineer and debugging expert.\n\nTASK:\nAnalyze the following code and fix the bug.\n\nINPUT:\n- Programming language: [LANGUAGE]\n- Code:\n[PASTE CODE HERE]\n- Error message:\n[PASTE ERROR HERE]\n\nINSTRUCTIONS:\n1. Explain what the bug is.\n2. Explain why it happens.\n3. Provide the corrected code.\n4. Suggest improvements to prevent similar bugs.\n5. If multiple fixes exist, show the safest fix.\n\nOUTPUT FORMAT:\n- Bug Explanation\n- Root Cause\n- Fixed Code\n- Improvements"
   },
   {
     "title": "Startup Pitch Deck Prompt (India)",
     "description": "Generate an investor-ready pitch deck outline for Indian startup funding.",
     "category": "business",
     "slug": "/prompts/startup-pitch-deck-india.html",
-    "tags": ["startup", "pitch deck", "india", "investor"]
+    "tags": ["startup", "pitch deck", "india", "investor"],
+    "prompt": "You are a startup pitch deck expert specializing in Indian investors and funding rounds.\n\nTASK:\nCreate an investor-ready pitch deck outline for an Indian startup.\n\nINPUT:\n- Startup name: [STARTUP NAME]\n- Industry: [INDUSTRY]\n- Target market: [TARGET MARKET]\n- Product description: [PRODUCT]\n- Business model: [BUSINESS MODEL]\n- Competitors: [COMPETITORS]\n- Traction: [TRACTION]\n- Revenue (if any): [REVENUE]\n- Funding ask: [FUNDING AMOUNT]\n- Use of funds: [USE OF FUNDS]\n\nREQUIREMENTS:\n- Include Indian market context (TAM/SAM/SOM in India)\n- Include investor-friendly structure\n- Include key metrics investors in India care about\n\nOUTPUT:\nWrite a slide-by-slide pitch deck structure with bullet points and suggested slide titles."
   }
 ]
