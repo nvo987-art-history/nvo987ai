@@ -2,10 +2,10 @@
 # ==========================================================
 # FILE: tools/generate_prompts.py
 # NVO987 AI – Prompt Generator (India)
-# Generates 1000+ static prompt pages from data/prompts.json
+# Generates static prompt pages from data/prompts.json
 # Uses prompts/template.html placeholders
-# Also generates sitemap.xml + robots.txt in root
-# 100% static / GitHub Pages compatible / Privacy-first
+# Generates sitemap.xml + robots.txt in root
+# GitHub Pages compatible / Privacy-first
 # ==========================================================
 
 import os
@@ -25,8 +25,6 @@ OUTPUT_DIR = "prompts"
 SITEMAP_FILE = "sitemap.xml"
 ROBOTS_FILE = "robots.txt"
 
-BANNER_IMAGE = "https://nvo987.ai.in/banner.jpg"
-
 
 # ----------------------------
 # HELPERS
@@ -36,35 +34,49 @@ def safe_escape_html(text: str) -> str:
     if text is None:
         return ""
     return (
-        text.replace("&", "&amp;")
-            .replace("<", "&lt;")
-            .replace(">", "&gt;")
-            .replace('"', "&quot;")
+        str(text)
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
     )
 
 
 def normalize_slug(slug: str) -> str:
     """
-    Slug must be like:
-      /prompts/bug-fixing-assistant.html
+    Ensures slug is always in this format:
+      /prompts/filename.html
 
-    This function ensures:
-      - starts with /
-      - contains /prompts/
-      - ends with .html
+    Accepts:
+      - "bug-fixing.html"
+      - "/bug-fixing.html"
+      - "/prompts/bug-fixing.html"
+      - "prompts/bug-fixing.html"
     """
+    if not slug:
+        return ""
+
     slug = slug.strip()
 
+    # remove accidental domain
+    slug = slug.replace(BASE_URL, "")
+
+    # ensure starts with /
     if not slug.startswith("/"):
         slug = "/" + slug
 
-    if not slug.startswith("/prompts/"):
-        # If user provided only filename like bug-fixing.html
-        if slug.endswith(".html"):
-            slug = "/prompts/" + slug.lstrip("/")
-        else:
-            slug = "/prompts/" + slug.lstrip("/") + ".html"
+    # if starts with /prompts already OK
+    if slug.startswith("/prompts/"):
+        pass
+    else:
+        # remove leading "/"
+        cleaned = slug.lstrip("/")
+        # remove "prompts/" if user already included it
+        if cleaned.startswith("prompts/"):
+            cleaned = cleaned.replace("prompts/", "", 1)
+        slug = "/prompts/" + cleaned
 
+    # ensure ends with .html
     if not slug.endswith(".html"):
         slug += ".html"
 
@@ -78,22 +90,37 @@ def extract_filename_from_slug(slug: str) -> str:
     return slug.split("/")[-1]
 
 
+def extract_slug_id_from_filename(filename: str) -> str:
+    """
+    bug-fixing-assistant.html -> bug-fixing-assistant
+    """
+    if filename.endswith(".html"):
+        return filename[:-5]
+    return filename
+
+
 def build_keywords(item: dict) -> str:
-    """
-    Generate keywords meta field.
-    Uses title + category + tags.
-    """
+    """Generate keywords meta field from title + category + tags."""
     tags = item.get("tags", [])
     category = item.get("category", "")
     title = item.get("title", "")
 
-    keywords = ["NVO987", "NVO987 AI", "AI prompt", "prompt library", "India"]
+    keywords = [
+        "NVO987",
+        "NVO987 AI",
+        "AI prompt",
+        "prompt library",
+        "India",
+        "ChatGPT prompts",
+        "Gemini prompts",
+        "Claude prompts"
+    ]
 
     if category:
-        keywords.append(category)
+        keywords.append(str(category))
 
     if title:
-        keywords.append(title)
+        keywords.append(str(title))
 
     for t in tags:
         keywords.append(str(t))
@@ -124,12 +151,10 @@ def write_file(path: str, content: str):
 
 
 # ----------------------------
-# GENERATE SITEMAP.XML
+# SITEMAP.XML
 # ----------------------------
 def generate_sitemap(urls: list) -> str:
-    """
-    Generate sitemap.xml content.
-    """
+    """Generate sitemap.xml content."""
     now = datetime.utcnow().strftime("%Y-%m-%d")
 
     out = []
@@ -148,13 +173,10 @@ def generate_sitemap(urls: list) -> str:
 
 
 # ----------------------------
-# GENERATE ROBOTS.TXT
+# ROBOTS.TXT
 # ----------------------------
 def generate_robots() -> str:
-    """
-    Generate robots.txt for indexing.
-    Allows everything, blocks template.html only.
-    """
+    """Generate robots.txt for indexing."""
     return f"""User-agent: *
 Allow: /
 
@@ -191,7 +213,6 @@ def main():
 
     # Dates
     today = datetime.utcnow().strftime("%Y-%m-%d")
-    year = datetime.utcnow().strftime("%Y")
 
     generated_urls = []
 
@@ -210,16 +231,21 @@ def main():
         if not description:
             description = f"Prompt template: {title}"
 
-        # Slug must be full path: /prompts/name.html
+        # Normalize slug
         slug = normalize_slug(item.get("slug", ""))
 
+        if not slug:
+            print(f"Skipping item: missing slug ({title})")
+            continue
+
         filename = extract_filename_from_slug(slug)
+        slug_id = extract_slug_id_from_filename(filename)
+
         out_path = os.path.join(OUTPUT_DIR, filename)
 
         canonical_url = f"{BASE_URL}{slug}"
         generated_urls.append(canonical_url)
 
-        # keywords and tags
         keywords = build_keywords(item)
         tags_string = build_tags_string(tags)
 
@@ -229,6 +255,8 @@ def main():
         safe_keywords = safe_escape_html(keywords)
         safe_category = safe_escape_html(category)
         safe_tags = safe_escape_html(tags_string)
+
+        # prompt text must keep newlines, but be safe
         safe_prompt_text = safe_escape_html(prompt_text)
 
         # Fill template placeholders
@@ -241,11 +269,10 @@ def main():
         html = html.replace("{{TAGS}}", safe_tags)
         html = html.replace("{{PROMPT_TEXT}}", safe_prompt_text)
 
-        # IMPORTANT: {{SLUG}} should be WITHOUT /prompts/ and WITHOUT .html in your template system
-        # BUT your template currently expects {{SLUG}} in URLs.
-        # We will supply slug without "/prompts/" and without ".html"
-        slug_clean = filename.replace(".html", "")
-        html = html.replace("{{SLUG}}", slug_clean)
+        # SLUG placeholder must be the filename without .html
+        # because template uses:
+        #   https://nvo987.ai.in/prompts/{{SLUG}}.html
+        html = html.replace("{{SLUG}}", slug_id)
 
         # Dates
         html = html.replace("{{DATE_PUBLISHED}}", today)
@@ -257,12 +284,11 @@ def main():
         print(f"Generated: {out_path}")
 
     # ----------------------------
-    # SITEMAP URLS (STATIC PAGES)
+    # STATIC URLS (only real pages)
     # ----------------------------
     static_urls = [
         f"{BASE_URL}/",
         f"{BASE_URL}/index.html",
-        f"{BASE_URL}/prompts/",
         f"{BASE_URL}/prompts/index.html",
         f"{BASE_URL}/legal.html",
         f"{BASE_URL}/contact.html",
@@ -270,7 +296,7 @@ def main():
 
     all_urls = static_urls + generated_urls
 
-    # Remove duplicates while preserving order
+    # Remove duplicates preserving order
     seen = set()
     final_urls = []
     for u in all_urls:
