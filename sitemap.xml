@@ -1,29 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <url>
-    <loc>https://nvo987.ai.in/</loc>
-    <lastmod>2026-04-26</lastmod>
-  </url>
-
-  <url>
-    <loc>https://nvo987.ai.in/prompts/</loc>
-    <lastmod>2026-04-26</lastmod>
-  </url>
-
-  <url>
-    <loc>https://nvo987.ai.in/prompts/index.html</loc>
-    <lastmod>2026-04-26</lastmod>
-  </url>
-
-  <url>
-    <loc>https://nvo987.ai.in/legal.html</loc>
-    <lastmod>2026-04-26</lastmod>
-  </url>
-
-  <url>
-    <loc>https://nvo987.ai.in/contact.html</loc>
-    <lastmod>2026-04-26</lastmod>
-  </url>
-
+  <url><loc>https://nvo987.ai.in/</loc><lastmod>2026-04-26</lastmod></url>
+  <url><loc>https://nvo987.ai.in/prompts/</loc><lastmod>2026-04-26</lastmod></url>
+  <url><loc>https://nvo987.ai.in/prompts/index.html</loc><lastmod>2026-04-26</lastmod></url>
+  <url><loc>https://nvo987.ai.in/legal.html</loc><lastmod>2026-04-26</lastmod></url>
+  <url><loc>https://nvo987.ai.in/contact.html</loc><lastmod>2026-04-26</lastmod></url>
+  <url><loc>https://nvo987.ai.in/prompts/ats-resume-software-engineer-india.html</loc><lastmod>2026-04-26</lastmod></url>
+  <url><loc>https://nvo987.ai.in/prompts/bug-fixing-assistant.html</loc><lastmod>2026-04-26</lastmod></url>
+  <url><loc>https://nvo987.ai.in/prompts/startup-pitch-deck-india.html</loc><lastmod>2026-04-26</lastmod></url>
 </urlset>
