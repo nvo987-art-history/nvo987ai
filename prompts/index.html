@@ -1,35 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Prompt Library (India) | NVO987 AI</title>
-  <meta name="description" content="Browse NVO987 AI Prompt Library for India. 100% privacy-first. No cookies. No tracking." />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://nvo987.ai.in/prompts/" />
+  <title>NVO987 AI – Prompt Library (India) | Browse All Prompts</title>
 
-  <link rel="stylesheet" href="../style.css" />
+  <meta name="description" content="Browse the full NVO987 AI Prompt Library (India). Search privacy-first prompt templates for ChatGPT, Gemini, Claude and modern AI assistants. 100% static, no cookies, no tracking.">
+  <meta name="keywords" content="NVO987, prompt library, AI prompts India, ChatGPT prompts, Gemini prompts, Claude prompts, resume prompts India, business prompts, marketing prompts, coding prompts">
+  <meta name="author" content="NVO987">
+  <meta name="publisher" content="NVO987">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#f6f1e9">
+  <meta name="color-scheme" content="light">
+  <meta name="permissions-policy" content="interest-cohort=()">
+
+  <link rel="canonical" href="https://nvo987.ai.in/prompts/">
+  <link rel="me" href="https://identity.nvo987.us/">
+  <link rel="me" href="mailto:contact@nvo987.ai.in">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="/style.css">
+
+  <meta property="og:site_name" content="NVO987 AI">
+  <meta property="og:title" content="NVO987 AI – Prompt Library (India)">
+  <meta property="og:description" content="Browse privacy-first AI prompts for India. No cookies. No tracking. 100% static.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nvo987.ai.in/prompts/">
+  <meta property="og:image" content="https://nvo987.ai.in/banner.jpg">
+  <meta property="og:locale" content="en_IN">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NVO987 AI – Prompt Library (India)">
+  <meta name="twitter:description" content="Browse the NVO987 AI prompt library for India. Privacy-first. No cookies. No tracking.">
+  <meta name="twitter:image" content="https://nvo987.ai.in/banner.jpg">
+  <meta name="twitter:dnt" content="on">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://identity.nvo987.us/#nvo987",
+        "name": "NVO987",
+        "url": "https://identity.nvo987.us/",
+        "email": "contact@nvo987.ai.in",
+        "identifier": [
+          "did:web:identity.nvo987.us"
+        ],
+        "sameAs": [
+          "https://identity.nvo987.us/",
+          "https://nvo987.ai.in/"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://nvo987.ai.in/#website",
+        "url": "https://nvo987.ai.in/",
+        "name": "NVO987 AI – Prompt Library (India)",
+        "publisher": {
+          "@id": "https://identity.nvo987.us/#nvo987"
+        }
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": "https://nvo987.ai.in/prompts/#collection",
+        "url": "https://nvo987.ai.in/prompts/",
+        "name": "Prompt Library (India)",
+        "isPartOf": {
+          "@id": "https://nvo987.ai.in/#website"
+        },
+        "about": {
+          "@id": "https://identity.nvo987.us/#nvo987"
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body>
-
   <div class="topbar">
-    <div class="container">
-      <div class="topbar-inner">
-        <div class="brand">
-          <span class="brand-name">NVO987 AI</span>
-          <span class="brand-tag">Prompt Library (India)</span>
-        </div>
-
-        <nav class="nav">
-          <a href="/index.html">Home</a>
-          <a href="/prompts/index.html">Prompts</a>
-          <a href="/legal.html">Legal</a>
-          <a href="/contact.html">Contact</a>
-        </nav>
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-name">NVO987 AI</div>
+        <div class="brand-tag">Prompt Library · India</div>
       </div>
+
+      <nav class="nav">
+        <a href="/index.html">Home</a>
+        <a href="/prompts/index.html">Prompts</a>
+        <a href="/legal.html">Legal</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
     </div>
   </div>
 
@@ -43,15 +112,19 @@
         </div>
 
         <div class="controls">
-          <input id="searchInput" type="text" placeholder="Search prompts (resume, visa, startup, coding, etc.)..." />
-          <select id="categorySelect">
-            <option value="all" selected>All categories</option>
+          <input id="searchInput" type="text" placeholder="Search prompts (resume, visa, startup, coding, etc.)...">
+          <select id="categoryFilter">
+            <option value="all">All categories</option>
+            <option value="career">Career</option>
+            <option value="coding">Coding</option>
+            <option value="business">Business</option>
+            <option value="education">Education</option>
           </select>
         </div>
 
-        <div id="statusBox" class="status info">Loading prompts…</div>
+        <div id="statusBox" class="status info">Loading prompts...</div>
 
-        <div id="placesGrid" class="grid"></div>
+        <div id="promptGrid" class="grid"></div>
       </section>
 
     </div>
@@ -59,104 +132,97 @@
 
   <footer class="footer">
     <div class="container footer-inner">
-      <p>© 2026 NVO987 – AI Prompt Library (India)</p>
-      <p class="muted">No cookies • No tracking • Static hosting via GitHub Pages</p>
+      <p>
+        © <span id="year"></span> NVO987 AI Prompt Library (India) ·
+        <a href="/legal.html">Legal</a> ·
+        <a href="/contact.html">Contact</a>
+      </p>
+
+      <p>
+        Identity:
+        <a href="https://identity.nvo987.us" target="_blank" rel="noopener">
+          identity.nvo987.us
+        </a>
+        · DID: <strong>did:web:identity.nvo987.us</strong>
+      </p>
+
+      <p>
+        Contact: <a href="mailto:contact@nvo987.ai.in">contact@nvo987.ai.in</a>
+      </p>
+
+      <p class="muted">
+        100% static website. No cookies. No tracking. No user accounts. No profiling.
+      </p>
     </div>
   </footer>
 
   <script>
-    const statusBox = document.getElementById("statusBox");
-    const grid = document.getElementById("placesGrid");
-    const searchInput = document.getElementById("searchInput");
-    const categorySelect = document.getElementById("categorySelect");
-
-    let allPrompts = [];
-
-    function escapeHTML(str) {
-      return String(str || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    function render() {
-      const q = (searchInput.value || "").toLowerCase().trim();
-      const cat = categorySelect.value;
-
-      grid.innerHTML = "";
-
-      let filtered = allPrompts;
-
-      if (cat !== "all") {
-        filtered = filtered.filter(p => p.category === cat);
-      }
-
-      if (q.length > 0) {
-        filtered = filtered.filter(p => {
-          const blob = JSON.stringify(p).toLowerCase();
-          return blob.includes(q);
-        });
-      }
-
-      if (filtered.length === 0) {
-        statusBox.className = "status warn";
-        statusBox.textContent = "No prompt found.";
-        return;
-      }
-
-      statusBox.className = "status success";
-      statusBox.textContent = filtered.length + " prompt(s) found.";
-
-      filtered.forEach(p => {
-        const card = document.createElement("article");
-        card.className = "place-card";
-
-        const tagsHtml = (p.tags || []).map(t => `<span class="pill">${escapeHTML(t)}</span>`).join("");
-
-        card.innerHTML = `
-          <div class="place-type">${escapeHTML(p.category)}</div>
-          <h3>${escapeHTML(p.title)}</h3>
-          <div class="place-desc">${escapeHTML(p.description)}</div>
-          <div class="tag-row">${tagsHtml}</div>
-          <div class="place-actions">
-            <a class="btn" href="/prompts/${escapeHTML(p.slug)}.html">Open Prompt</a>
-          </div>
-        `;
-
-        grid.appendChild(card);
-      });
-    }
+    document.getElementById("year").textContent = new Date().getFullYear();
 
     async function loadPrompts() {
+      const statusBox = document.getElementById("statusBox");
+      const grid = document.getElementById("promptGrid");
+
       try {
-        const res = await fetch("/data/prompts.json?v=" + Date.now(), { cache: "no-store" });
-        const data = await res.json();
+        const res = await fetch("/data/prompts.json");
+        const prompts = await res.json();
 
-        allPrompts = data;
+        statusBox.textContent = prompts.length + " prompt(s) found.";
 
-        const categories = [...new Set(allPrompts.map(p => p.category))].sort();
-        categories.forEach(c => {
-          const opt = document.createElement("option");
-          opt.value = c;
-          opt.textContent = c;
-          categorySelect.appendChild(opt);
-        });
+        function render(filtered) {
+          grid.innerHTML = "";
+          statusBox.textContent = filtered.length + " prompt(s) found.";
 
-        render();
-      } catch (err) {
-        console.error(err);
+          filtered.forEach(p => {
+            const card = document.createElement("article");
+            card.className = "place-card";
+
+            card.innerHTML = `
+              <span class="place-type">${p.category.toUpperCase()}</span>
+              <h3>${p.title}</h3>
+              <p class="place-desc">${p.description}</p>
+              <div class="place-actions">
+                <a class="btn" href="${p.slug}">Open Prompt</a>
+              </div>
+            `;
+
+            grid.appendChild(card);
+          });
+        }
+
+        const searchInput = document.getElementById("searchInput");
+        const categoryFilter = document.getElementById("categoryFilter");
+
+        function applyFilters() {
+          const q = searchInput.value.toLowerCase().trim();
+          const cat = categoryFilter.value;
+
+          const filtered = prompts.filter(p => {
+            const matchesQuery =
+              p.title.toLowerCase().includes(q) ||
+              p.description.toLowerCase().includes(q) ||
+              (p.tags || []).join(" ").toLowerCase().includes(q);
+
+            const matchesCategory = (cat === "all") || (p.category === cat);
+
+            return matchesQuery && matchesCategory;
+          });
+
+          render(filtered);
+        }
+
+        searchInput.addEventListener("input", applyFilters);
+        categoryFilter.addEventListener("change", applyFilters);
+
+        render(prompts);
+
+      } catch (e) {
         statusBox.className = "status error";
-        statusBox.textContent = "Error: prompts.json could not be loaded.";
+        statusBox.textContent = "Failed to load prompt database.";
       }
     }
-
-    searchInput.addEventListener("input", render);
-    categorySelect.addEventListener("change", render);
 
     loadPrompts();
   </script>
-
 </body>
 </html>
