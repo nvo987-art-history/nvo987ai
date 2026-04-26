@@ -36,7 +36,6 @@ PROMPTS_PER_PAGE = 25
 # HELPERS
 # ----------------------------
 def safe_escape_html(text: str) -> str:
-    """Escape HTML special chars safely for inserting into HTML."""
     if text is None:
         return ""
     return (
@@ -50,7 +49,7 @@ def safe_escape_html(text: str) -> str:
 
 def normalize_slug(slug: str) -> str:
     """
-    Ensures slug is always in this format:
+    Ensures slug is always:
       /prompts/filename.html
     """
     if not slug:
@@ -75,12 +74,10 @@ def normalize_slug(slug: str) -> str:
 
 
 def extract_filename_from_slug(slug: str) -> str:
-    """ /prompts/example.html -> example.html """
     return slug.split("/")[-1]
 
 
 def extract_slug_id_from_filename(filename: str) -> str:
-    """ example.html -> example """
     if filename.endswith(".html"):
         return filename[:-5]
     return filename
@@ -129,12 +126,9 @@ def build_tags_string(tags) -> str:
 
 
 def write_file(path: str, content: str):
-    """
-    Safe write file.
-    Fix: if path has no folder (example: sitemap.xml),
-    do NOT call os.makedirs("").
-    """
     folder = os.path.dirname(path)
+
+    # IMPORTANT FIX: if folder is empty (root file like sitemap.xml), skip mkdir
     if folder:
         os.makedirs(folder, exist_ok=True)
 
@@ -177,7 +171,7 @@ Sitemap: {BASE_URL}/sitemap.xml
 
 
 # ----------------------------
-# INDEX PAGE GENERATOR (SEARCH + PAGINATION)
+# INDEX PAGE GENERATOR
 # ----------------------------
 def build_prompt_index_page(prompts, page_num, total_pages, today):
     cards = []
@@ -189,11 +183,7 @@ def build_prompt_index_page(prompts, page_num, total_pages, today):
         tags = item.get("tags", [])
         tags_str = safe_escape_html(", ".join(tags)) if tags else ""
 
-        slug = normalize_slug(item.get("slug", ""))
-
-        # slug is /prompts/example.html
-        # from /prompts/page/1.html we need ../example.html
-        local_filename = extract_filename_from_slug(slug)
+        slug = normalize_slug(item.get("slug", ""))  # /prompts/xxx.html
 
         cards.append(f"""
         <article class="place-card prompt-card"
@@ -208,28 +198,47 @@ def build_prompt_index_page(prompts, page_num, total_pages, today):
           <p class="small-note muted">Tags: {tags_str}</p>
 
           <div class="place-actions">
-            <a class="btn" href="../{local_filename}">Open Prompt</a>
+            <a class="btn" href="{slug}">Open Prompt</a>
           </div>
         </article>
         """)
 
     cards_html = "\n".join(cards)
 
-    pagination_links = []
+    # Pagination links (ABSOLUTE PATH FIX)
+    prev_link = ""
+    next_link = ""
 
     if page_num > 1:
-        pagination_links.append(f'<a class="btn secondary" href="{page_num-1}.html">← Previous</a>')
+        prev_link = f'/prompts/page/{page_num-1}.html'
+    else:
+        prev_link = None
+
+    if page_num < total_pages:
+        next_link = f'/prompts/page/{page_num+1}.html'
+    else:
+        next_link = None
+
+    pagination_links = []
+
+    if prev_link:
+        pagination_links.append(f'<a class="btn secondary" href="{prev_link}">← Previous</a>')
     else:
         pagination_links.append(f'<span class="btn secondary disabled">← Previous</span>')
 
     pagination_links.append(f'<span class="page-indicator">Page {page_num} / {total_pages}</span>')
 
-    if page_num < total_pages:
-        pagination_links.append(f'<a class="btn secondary" href="{page_num+1}.html">Next →</a>')
+    if next_link:
+        pagination_links.append(f'<a class="btn secondary" href="{next_link}">Next →</a>')
     else:
         pagination_links.append(f'<span class="btn secondary disabled">Next →</span>')
 
     pagination_html = "\n".join(pagination_links)
+
+    # Canonical URL
+    canonical = f"{BASE_URL}/prompts/page/{page_num}.html"
+    if page_num == 1:
+        canonical = f"{BASE_URL}/prompts/index.html"
 
     html = f"""<!DOCTYPE html>
 <html lang="en-IN">
@@ -243,11 +252,11 @@ def build_prompt_index_page(prompts, page_num, total_pages, today):
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#f6f1e9">
   <meta name="color-scheme" content="light">
-  <link rel="canonical" href="{BASE_URL}/prompts/page/{page_num}.html">
+  <link rel="canonical" href="{canonical}">
 
-  <link rel="icon" href="../../favicon.ico" sizes="any">
-  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
-  <link rel="stylesheet" href="../../style.css">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
@@ -261,10 +270,10 @@ def build_prompt_index_page(prompts, page_num, total_pages, today):
         </div>
 
         <nav class="nav">
-          <a href="../../index.html">Home</a>
-          <a href="../index.html">Prompts</a>
-          <a href="../../legal.html">Legal</a>
-          <a href="../../contact.html">Contact</a>
+          <a href="/index.html">Home</a>
+          <a href="/prompts/index.html">Prompts</a>
+          <a href="/legal.html">Legal</a>
+          <a href="/contact.html">Contact</a>
         </nav>
       </div>
     </div>
@@ -311,10 +320,10 @@ def build_prompt_index_page(prompts, page_num, total_pages, today):
     <div class="container footer-inner">
       <p>
         © <span id="year"></span> NVO987 AI Prompt Library (India) ·
-        <a href="../../index.html">Home</a> ·
-        <a href="../index.html">Prompts</a> ·
-        <a href="../../legal.html">Legal</a> ·
-        <a href="../../contact.html">Contact</a>
+        <a href="/index.html">Home</a> ·
+        <a href="/prompts/index.html">Prompts</a> ·
+        <a href="/legal.html">Legal</a> ·
+        <a href="/contact.html">Contact</a>
       </p>
 
       <p class="small-note muted">
@@ -382,7 +391,6 @@ def main():
     today = datetime.utcnow().strftime("%Y-%m-%d")
 
     generated_urls = []
-    generated_files = []
 
     # ----------------------------
     # GENERATE PROMPT PAGES
@@ -392,15 +400,9 @@ def main():
         description = item.get("description", "").strip()
         category = item.get("category", "prompt").strip()
         tags = item.get("tags", [])
-
-        # IMPORTANT: prompt might not exist
         prompt_text = item.get("prompt", "").strip()
 
-        if not prompt_text:
-            prompt_text = f"[PROMPT MISSING]\n\nThis prompt entry has no 'prompt' field in prompts.json.\n\nTitle: {title}\nCategory: {category}\nTags: {', '.join(tags)}\n\nFix: add a 'prompt' field to this JSON item."
-
         if not title:
-            print("Skipping item: missing title")
             continue
 
         if not description:
@@ -408,7 +410,6 @@ def main():
 
         slug = normalize_slug(item.get("slug", ""))
         if not slug:
-            print(f"Skipping item: missing slug ({title})")
             continue
 
         filename = extract_filename_from_slug(slug)
@@ -443,9 +444,6 @@ def main():
         html = html.replace("{{DATE_MODIFIED}}", today)
 
         write_file(out_path, html)
-        generated_files.append(out_path)
-
-        print(f"Generated prompt: {out_path}")
 
     # ----------------------------
     # GENERATE PAGINATED INDEX
@@ -463,19 +461,12 @@ def main():
         out_page_path = os.path.join(PAGES_DIR, f"{page_num}.html")
         write_file(out_page_path, page_html)
 
-        print(f"Generated index page: {out_page_path}")
-
-    # prompts/index.html should match page/1.html
+    # prompts/index.html should match page 1
     index_html_path = os.path.join(OUTPUT_DIR, "index.html")
     first_page_path = os.path.join(PAGES_DIR, "1.html")
 
     with open(first_page_path, "r", encoding="utf-8") as f:
         first_page_html = f.read()
-
-    first_page_html = first_page_html.replace(
-        f'{BASE_URL}/prompts/page/1.html',
-        f'{BASE_URL}/prompts/index.html'
-    )
 
     write_file(index_html_path, first_page_html)
 
@@ -508,13 +499,6 @@ def main():
 
     robots_content = generate_robots()
     write_file(ROBOTS_FILE, robots_content)
-
-    print("\n===============================")
-    print(f"Generated prompt pages: {len(generated_urls)}")
-    print(f"Generated index pages: {total_pages}")
-    print(f"Updated sitemap: {SITEMAP_FILE}")
-    print(f"Updated robots: {ROBOTS_FILE}")
-    print("===============================")
 
 
 if __name__ == "__main__":
