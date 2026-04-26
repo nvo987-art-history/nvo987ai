@@ -3,6 +3,7 @@
    NVO987 AI – Prompt Library (India)
    Luxury UI / consistent typography / mobile-first responsive
    + DID footer support (identity.nvo987.us)
+   + MOBILE SAFE AREA FIX (logo not cut on left)
    ========================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap");
@@ -89,7 +90,7 @@ img {
 }
 
 /* ==========================================================
-   TOPBAR (FIXED MOBILE NAV)
+   TOPBAR (FIXED MOBILE NAV + SAFE AREA FIX)
    ========================================================== */
 .topbar {
   position: sticky;
@@ -101,6 +102,10 @@ img {
 
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+
+  /* SAFE AREA FIX (prevents logo cut on left/right on mobile) */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 .topbar-inner {
@@ -109,6 +114,10 @@ img {
   align-items: center;
   gap: 14px;
   padding: 12px 0;
+
+  /* extra inner padding for mobile browsers */
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 /* Brand */
@@ -725,6 +734,14 @@ a:hover {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+
+    /* extra safety padding for logo cut issue */
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .brand {
+    padding-left: 2px;
   }
 
   .nav {
@@ -760,4 +777,4 @@ a:hover {
     width: 100%;
     max-width: 460px;
   }
-} 
+   }
