@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nvo987.ai.in/sitemap.xml
