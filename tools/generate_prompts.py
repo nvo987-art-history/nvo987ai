@@ -57,7 +57,6 @@ def normalize_slug(slug: str) -> str:
         return ""
 
     slug = slug.strip()
-
     slug = slug.replace(BASE_URL, "")
 
     if not slug.startswith("/"):
@@ -132,7 +131,15 @@ def build_tags_string(tags) -> str:
 
 
 def write_file(path: str, content: str):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    """
+    FIXED:
+    If file is in root (example: sitemap.xml),
+    os.path.dirname(path) returns "" and mkdir would crash.
+    """
+    folder = os.path.dirname(path)
+    if folder:
+        os.makedirs(folder, exist_ok=True)
+
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
 
@@ -189,7 +196,7 @@ def build_prompt_index_page(prompts, page_num, total_pages, today):
         tags_str = safe_escape_html(", ".join(tags)) if tags else ""
 
         slug = normalize_slug(item.get("slug", ""))
-        url = slug.replace("/prompts/", "")  # local link
+        url = slug.replace("/prompts/", "")  # local file link
 
         cards.append(f"""
         <article class="place-card prompt-card"
