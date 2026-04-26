@@ -223,7 +223,12 @@
             </div>
           </div>
 
-          <pre id="promptText" style="white-space:pre-wrap; margin-top:14px;">{{PROMPT_TEXT}}</pre>
+          <!-- IMPORTANT: textarea is the most reliable copy solution on mobile -->
+          <textarea
+            id="promptText"
+            readonly
+            style="width:100%; margin-top:14px; min-height:240px; resize:vertical; white-space:pre; font-family:inherit;"
+          >{{PROMPT_TEXT}}</textarea>
 
           <p class="small-note muted" style="margin-top:12px;">
             Tip: Paste into ChatGPT, Gemini, Claude, or any AI assistant.
@@ -303,13 +308,40 @@
     document.getElementById("year").textContent = new Date().getFullYear();
 
     const btn = document.getElementById("copyPromptBtn");
-    const promptText = document.getElementById("promptText");
+    const promptBox = document.getElementById("promptText");
 
     btn.addEventListener("click", async () => {
+      const textToCopy = promptBox.value.trim();
+
+      if (!textToCopy) {
+        alert("Prompt is empty.");
+        return;
+      }
+
+      // Try modern clipboard API first
       try {
-        await navigator.clipboard.writeText(promptText.innerText.trim());
+        await navigator.clipboard.writeText(textToCopy);
         btn.textContent = "Copied!";
         setTimeout(() => btn.textContent = "Copy Prompt", 1500);
+        return;
+      } catch (e) {
+        // fallback below
+      }
+
+      // Fallback method (older mobile browsers)
+      try {
+        promptBox.focus();
+        promptBox.select();
+        promptBox.setSelectionRange(0, 999999);
+
+        const ok = document.execCommand("copy");
+
+        if (ok) {
+          btn.textContent = "Copied!";
+          setTimeout(() => btn.textContent = "Copy Prompt", 1500);
+        } else {
+          alert("Copy failed. Please select and copy manually.");
+        }
       } catch (e) {
         alert("Copy failed. Please select and copy manually.");
       }
