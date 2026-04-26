@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
 
+Disallow: /prompts/template.html
+
 Sitemap: https://nvo987.ai.in/sitemap.xml
