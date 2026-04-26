@@ -205,7 +205,22 @@
 
           <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
             <h2 style="margin:0;">Prompt</h2>
-            <button class="btn" id="copyPromptBtn" type="button">Copy Prompt</button>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+              <button class="btn" id="copyPromptBtn" type="button">Copy Prompt</button>
+
+              <a class="btn secondary" href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer">
+                Open ChatGPT
+              </a>
+
+              <a class="btn secondary" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">
+                Open Gemini
+              </a>
+
+              <a class="btn secondary" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">
+                Open Claude
+              </a>
+            </div>
           </div>
 
           <pre id="promptText" style="white-space:pre-wrap; margin-top:14px;">{{PROMPT_TEXT}}</pre>
@@ -213,6 +228,11 @@
           <p class="small-note muted" style="margin-top:12px;">
             Tip: Paste into ChatGPT, Gemini, Claude, or any AI assistant.
           </p>
+
+          <p class="small-note muted" style="margin-top:10px;">
+            Note: AI provider URLs may change in the future. If a link stops working, open the assistant manually.
+          </p>
+
         </div>
       </section>
 
@@ -297,4 +317,4 @@
   </script>
 
 </body>
-  </html>
+</html>
