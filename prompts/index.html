@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Prompt Library (India) | NVO987 AI</title>
+  <meta name="description" content="Browse NVO987 AI Prompt Library for India. 100% privacy-first. No cookies. No tracking." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nvo987.ai.in/prompts/" />
+
+  <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-name">NVO987 AI</span>
+          <span class="brand-tag">Prompt Library (India)</span>
+        </div>
+
+        <nav class="nav">
+          <a href="/index.html">Home</a>
+          <a href="/prompts/index.html">Prompts</a>
+          <a href="/legal.html">Legal</a>
+          <a href="/contact.html">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <main class="main">
+    <div class="container">
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Prompt Library (India)</h2>
+          <p>Search prompts. 100% static. No cookies. No tracking. Privacy-first.</p>
+        </div>
+
+        <div class="controls">
+          <input id="searchInput" type="text" placeholder="Search prompts (resume, visa, startup, coding, etc.)..." />
+          <select id="categorySelect">
+            <option value="all" selected>All categories</option>
+          </select>
+        </div>
+
+        <div id="statusBox" class="status info">Loading prompts…</div>
+
+        <div id="placesGrid" class="grid"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 NVO987 – AI Prompt Library (India)</p>
+      <p class="muted">No cookies • No tracking • Static hosting via GitHub Pages</p>
+    </div>
+  </footer>
+
+  <script>
+    const statusBox = document.getElementById("statusBox");
+    const grid = document.getElementById("placesGrid");
+    const searchInput = document.getElementById("searchInput");
+    const categorySelect = document.getElementById("categorySelect");
+
+    let allPrompts = [];
+
+    function escapeHTML(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function render() {
+      const q = (searchInput.value || "").toLowerCase().trim();
+      const cat = categorySelect.value;
+
+      grid.innerHTML = "";
+
+      let filtered = allPrompts;
+
+      if (cat !== "all") {
+        filtered = filtered.filter(p => p.category === cat);
+      }
+
+      if (q.length > 0) {
+        filtered = filtered.filter(p => {
+          const blob = JSON.stringify(p).toLowerCase();
+          return blob.includes(q);
+        });
+      }
+
+      if (filtered.length === 0) {
+        statusBox.className = "status warn";
+        statusBox.textContent = "No prompt found.";
+        return;
+      }
+
+      statusBox.className = "status success";
+      statusBox.textContent = filtered.length + " prompt(s) found.";
+
+      filtered.forEach(p => {
+        const card = document.createElement("article");
+        card.className = "place-card";
+
+        const tagsHtml = (p.tags || []).map(t => `<span class="pill">${escapeHTML(t)}</span>`).join("");
+
+        card.innerHTML = `
+          <div class="place-type">${escapeHTML(p.category)}</div>
+          <h3>${escapeHTML(p.title)}</h3>
+          <div class="place-desc">${escapeHTML(p.description)}</div>
+          <div class="tag-row">${tagsHtml}</div>
+          <div class="place-actions">
+            <a class="btn" href="/prompts/${escapeHTML(p.slug)}.html">Open Prompt</a>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    async function loadPrompts() {
+      try {
+        const res = await fetch("/data/prompts.json?v=" + Date.now(), { cache: "no-store" });
+        const data = await res.json();
+
+        allPrompts = data;
+
+        const categories = [...new Set(allPrompts.map(p => p.category))].sort();
+        categories.forEach(c => {
+          const opt = document.createElement("option");
+          opt.value = c;
+          opt.textContent = c;
+          categorySelect.appendChild(opt);
+        });
+
+        render();
+      } catch (err) {
+        console.error(err);
+        statusBox.className = "status error";
+        statusBox.textContent = "Error: prompts.json could not be loaded.";
+      }
+    }
+
+    searchInput.addEventListener("input", render);
+    categorySelect.addEventListener("change", render);
+
+    loadPrompts();
+  </script>
+
+</body>
+</html>
