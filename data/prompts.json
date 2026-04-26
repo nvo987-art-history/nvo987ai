@@ -1,26 +1,257 @@
 [
   {
     "title": "ATS Resume Prompt – Software Engineer (India)",
-    "description": "Generate a modern ATS software engineer resume optimized for the Indian tech job market.",
+    "description": "Generate a modern ATS-friendly software engineer resume optimized for Indian recruiters and ATS systems.",
     "category": "career",
-    "slug": "/prompts/ats-resume-software-engineer-india.html",
-    "tags": ["resume", "software engineer", "india", "ats"],
-    "prompt": "You are an expert ATS resume writer specializing in the Indian tech job market.\n\nTASK:\nCreate a complete ATS-friendly resume for a Software Engineer in India.\n\nINPUT:\n- Candidate name: [NAME]\n- Location: [CITY, INDIA]\n- Email: [EMAIL]\n- Phone: [PHONE]\n- LinkedIn: [LINK]\n- GitHub: [GITHUB]\n- Years of experience: [YEARS]\n- Tech stack: [TECH STACK]\n- Work history: [WORK EXPERIENCE]\n- Education: [EDUCATION]\n- Projects: [PROJECTS]\n- Certifications: [CERTIFICATIONS]\n\nRULES:\n- Use clean ATS format (no tables, no icons)\n- Use strong action verbs\n- Add measurable achievements\n- Include a Skills section optimized for Indian recruiters\n- Keep it professional and modern\n\nOUTPUT:\nReturn the full resume in plain text format with clear headings."
+    "slug": "/prompts/ats-resume-prompt-software-engineer-india.html",
+    "tags": [
+      "resume",
+      "software engineer",
+      "ats",
+      "india",
+      "job"
+    ],
+    "prompt": "You are an expert ATS resume writer specializing in the Indian job market.\n\nTASK:\nCreate a complete ATS-friendly resume for a Software Engineer applying in India.\n\nINPUT:\n- Full name: [NAME]\n- Location (India): [CITY]\n- Phone: [PHONE]\n- Email: [EMAIL]\n- LinkedIn: [LINKEDIN]\n- GitHub: [GITHUB]\n- Total experience: [YEARS]\n- Tech stack: [STACK]\n- Work experience: [EXPERIENCE]\n- Projects: [PROJECTS]\n- Education: [EDUCATION]\n- Certifications: [CERTIFICATIONS]\n\nRULES:\n- Use Indian English professional tone\n- Do NOT use tables, icons, or columns\n- Use strong action verbs\n- Add measurable achievements where possible\n- Optimize keywords for Indian ATS systems\n\nOUTPUT:\nReturn a complete resume in plain text with sections:\nSummary, Skills, Experience, Projects, Education, Certifications, Achievements."
   },
   {
-    "title": "Bug Fixing Assistant Prompt",
-    "description": "Debug code faster with structured error analysis and step-by-step reasoning.",
-    "category": "coding",
-    "slug": "/prompts/bug-fixing-assistant.html",
-    "tags": ["coding", "debug", "bugs"],
-    "prompt": "You are a senior software engineer and debugging expert.\n\nTASK:\nAnalyze the following code and fix the bug.\n\nINPUT:\n- Programming language: [LANGUAGE]\n- Code:\n[PASTE CODE HERE]\n- Error message:\n[PASTE ERROR HERE]\n\nINSTRUCTIONS:\n1. Explain what the bug is.\n2. Explain why it happens.\n3. Provide the corrected code.\n4. Suggest improvements to prevent similar bugs.\n5. If multiple fixes exist, show the safest fix.\n\nOUTPUT FORMAT:\n- Bug Explanation\n- Root Cause\n- Fixed Code\n- Improvements"
+    "title": "HR Interview Prompt – Fresher Candidate (India)",
+    "description": "Generate HR interview questions and best answers for freshers applying in India.",
+    "category": "career",
+    "slug": "/prompts/hr-interview-prompt-fresher-candidate-india.html",
+    "tags": [
+      "interview",
+      "hr",
+      "freshers",
+      "india",
+      "job"
+    ],
+    "prompt": "You are an HR interview coach for Indian companies.\n\nTASK:\nPrepare a fresher candidate for an HR interview in India.\n\nINPUT:\n- Role applied for: [ROLE]\n- Education background: [EDUCATION]\n- Skills: [SKILLS]\n- Internship/project experience: [EXPERIENCE]\n- City: [CITY]\n\nOUTPUT REQUIREMENTS:\n1. Provide 20 common HR interview questions used in India.\n2. Provide strong sample answers (Indian English tone).\n3. Provide 10 role-specific technical + behavioural questions.\n4. Provide tips for salary expectation answers (India context).\n5. Provide final checklist for interview day."
+  },
+  {
+    "title": "LinkedIn Profile Optimization Prompt (India)",
+    "description": "Optimize a LinkedIn profile headline, summary and experience for Indian recruiters.",
+    "category": "career",
+    "slug": "/prompts/linkedin-profile-optimization-prompt-india.html",
+    "tags": [
+      "linkedin",
+      "career",
+      "india",
+      "job search"
+    ],
+    "prompt": "You are a LinkedIn branding expert specialized in the Indian job market.\n\nTASK:\nOptimize a LinkedIn profile for maximum recruiter visibility in India.\n\nINPUT:\n- Current job title: [TITLE]\n- Target job title: [TARGET ROLE]\n- Skills: [SKILLS]\n- Experience summary: [EXPERIENCE]\n- Industry: [INDUSTRY]\n\nOUTPUT:\n- 5 optimized headline options\n- 1 professional About/Summary section (200–300 words)\n- Rewritten Experience section for ATS + recruiters\n- Skills section suggestions (top 30 skills)\n- 5 recommended keywords for Indian recruiters\n- 5 recommended featured content ideas"
+  },
+  {
+    "title": "Salary Negotiation Prompt (India)",
+    "description": "Generate a salary negotiation strategy for Indian job offers including CTC breakdown.",
+    "category": "career",
+    "slug": "/prompts/salary-negotiation-prompt-india.html",
+    "tags": [
+      "salary",
+      "negotiation",
+      "ctc",
+      "india",
+      "job offer"
+    ],
+    "prompt": "You are a salary negotiation expert specializing in Indian job offers.\n\nTASK:\nHelp negotiate a salary offer in India.\n\nINPUT:\n- Current CTC: [CURRENT CTC]\n- Offered CTC: [OFFERED CTC]\n- Role: [ROLE]\n- City: [CITY]\n- Years of experience: [YEARS]\n- Competing offers (if any): [OTHER OFFERS]\n- Desired salary range: [TARGET RANGE]\n\nOUTPUT:\n- Step-by-step negotiation plan\n- Email template for negotiation\n- WhatsApp/phone script for HR discussion\n- How to ask for joining bonus, relocation, ESOPs\n- How to compare fixed vs variable vs perks\n- India-specific advice (CTC, PF, gratuity, tax)"
   },
   {
     "title": "Startup Pitch Deck Prompt (India)",
-    "description": "Generate an investor-ready pitch deck outline for Indian startup funding.",
+    "description": "Generate an investor-ready pitch deck outline tailored to Indian VC expectations.",
     "category": "business",
-    "slug": "/prompts/startup-pitch-deck-india.html",
-    "tags": ["startup", "pitch deck", "india", "investor"],
-    "prompt": "You are a startup pitch deck expert specializing in Indian investors and funding rounds.\n\nTASK:\nCreate an investor-ready pitch deck outline for an Indian startup.\n\nINPUT:\n- Startup name: [STARTUP NAME]\n- Industry: [INDUSTRY]\n- Target market: [TARGET MARKET]\n- Product description: [PRODUCT]\n- Business model: [BUSINESS MODEL]\n- Competitors: [COMPETITORS]\n- Traction: [TRACTION]\n- Revenue (if any): [REVENUE]\n- Funding ask: [FUNDING AMOUNT]\n- Use of funds: [USE OF FUNDS]\n\nREQUIREMENTS:\n- Include Indian market context (TAM/SAM/SOM in India)\n- Include investor-friendly structure\n- Include key metrics investors in India care about\n\nOUTPUT:\nWrite a slide-by-slide pitch deck structure with bullet points and suggested slide titles."
+    "slug": "/prompts/startup-pitch-deck-prompt-india.html",
+    "tags": [
+      "startup",
+      "pitch deck",
+      "india",
+      "funding",
+      "investor"
+    ],
+    "prompt": "You are a startup pitch deck expert specializing in Indian investors.\n\nTASK:\nCreate a slide-by-slide pitch deck outline for an Indian startup.\n\nINPUT:\n- Startup name: [NAME]\n- Sector: [SECTOR]\n- City: [CITY]\n- Problem: [PROBLEM]\n- Solution: [SOLUTION]\n- Target customers: [CUSTOMERS]\n- Pricing model: [PRICING]\n- Competitors: [COMPETITORS]\n- Traction metrics: [TRACTION]\n- Revenue: [REVENUE]\n- Funding ask: [FUNDING AMOUNT INR]\n- Use of funds: [USE OF FUNDS]\n\nOUTPUT:\n- Slide list with titles\n- Bullet points for each slide\n- Metrics Indian investors expect\n- Suggested story narrative for founder presentation"
+  },
+  {
+    "title": "MSME Business Plan Prompt (India)",
+    "description": "Generate an MSME business plan optimized for India including GST and compliance.",
+    "category": "business",
+    "slug": "/prompts/msme-business-plan-prompt-india.html",
+    "tags": [
+      "msme",
+      "business plan",
+      "gst",
+      "india",
+      "startup"
+    ],
+    "prompt": "You are a business consultant for Indian MSMEs.\n\nTASK:\nCreate a detailed business plan for an MSME business in India.\n\nINPUT:\n- Business type: [BUSINESS TYPE]\n- Location: [CITY/STATE]\n- Target market: [CUSTOMERS]\n- Products/services: [OFFERING]\n- Pricing: [PRICING]\n- Competitors: [COMPETITORS]\n- Initial investment budget (INR): [BUDGET]\n\nOUTPUT:\n- Executive summary\n- Market research (India)\n- Competitive analysis\n- Marketing plan\n- Operations plan\n- Hiring plan\n- Financial plan (INR projections)\n- GST and compliance checklist\n- Risk analysis and mitigation"
+  },
+  {
+    "title": "GST Invoice Prompt (India)",
+    "description": "Generate GST invoice templates and compliance checklist for Indian businesses.",
+    "category": "business",
+    "slug": "/prompts/gst-invoice-prompt-india.html",
+    "tags": [
+      "gst",
+      "invoice",
+      "india",
+      "tax",
+      "business"
+    ],
+    "prompt": "You are an Indian GST compliance assistant.\n\nTASK:\nCreate a GST invoice template and checklist for compliance.\n\nINPUT:\n- Business name: [BUSINESS NAME]\n- GSTIN: [GSTIN]\n- State: [STATE]\n- Customer type: [B2B/B2C]\n- Product/service description: [DESCRIPTION]\n- Price: [PRICE INR]\n- GST rate: [GST %]\n\nOUTPUT:\n- Sample GST invoice format (text)\n- Explanation of CGST/SGST/IGST\n- Checklist of mandatory invoice fields\n- Common GST mistakes to avoid\n- Disclaimer recommending CA consultation"
+  },
+  {
+    "title": "Bug Fixing Assistant Prompt",
+    "description": "Debug code faster with structured analysis and fix recommendations.",
+    "category": "coding",
+    "slug": "/prompts/bug-fixing-assistant-prompt.html",
+    "tags": [
+      "coding",
+      "debugging",
+      "bugs",
+      "software",
+      "india"
+    ],
+    "prompt": "You are a senior software engineer and debugging specialist.\n\nTASK:\nAnalyze and fix the bug in the provided code.\n\nINPUT:\n- Programming language: [LANGUAGE]\n- Code snippet:\n[PASTE CODE HERE]\n- Error message:\n[PASTE ERROR HERE]\n- Expected behavior:\n[EXPECTED OUTPUT]\n\nOUTPUT FORMAT:\n1. Bug explanation\n2. Root cause\n3. Fixed code (full corrected version)\n4. Explanation of fix\n5. Additional improvements\n6. Unit test suggestions"
+  },
+  {
+    "title": "System Design Interview Prompt (India)",
+    "description": "Generate system design interview answers for Indian tech companies.",
+    "category": "coding",
+    "slug": "/prompts/system-design-interview-prompt-india.html",
+    "tags": [
+      "system design",
+      "interview",
+      "india",
+      "scalability"
+    ],
+    "prompt": "You are a system design interview coach for Indian product companies.\n\nTASK:\nAnswer a system design interview question with a structured approach.\n\nINPUT:\n- System to design: [SYSTEM]\n- Expected users: [SCALE]\n- Constraints: [CONSTRAINTS]\n- Tech preference: [TECH STACK]\n\nOUTPUT:\n- Requirements clarification\n- API design\n- Database schema\n- High-level architecture\n- Scaling strategy\n- Caching strategy\n- Load balancing\n- Failure handling\n- Tradeoffs and bottlenecks"
+  },
+  {
+    "title": "Python Automation Prompt (India)",
+    "description": "Generate Python automation scripts for Indian office workflows.",
+    "category": "coding",
+    "slug": "/prompts/python-automation-prompt-india.html",
+    "tags": [
+      "python",
+      "automation",
+      "india",
+      "scripts"
+    ],
+    "prompt": "You are a Python automation engineer.\n\nTASK:\nCreate a Python automation solution for an Indian office workflow.\n\nINPUT:\n- Workflow description: [WORKFLOW]\n- Data format: [EXCEL/CSV/PDF/EMAIL]\n- Output requirement: [OUTPUT]\n- Tools allowed: [TOOLS]\n\nOUTPUT:\n- Step-by-step automation plan\n- Python script code\n- Required libraries\n- Setup instructions\n- Common error fixes"
+  },
+  {
+    "title": "SEO Blog Prompt for Indian Market",
+    "description": "Generate SEO blog post outlines optimized for Indian search intent.",
+    "category": "marketing",
+    "slug": "/prompts/seo-blog-prompt-for-indian-market.html",
+    "tags": [
+      "seo",
+      "blog",
+      "india",
+      "content marketing"
+    ],
+    "prompt": "You are an SEO strategist specializing in Indian search traffic.\n\nTASK:\nCreate an SEO-optimized blog post outline for India.\n\nINPUT:\n- Keyword: [KEYWORD]\n- Target city/state (optional): [LOCATION]\n- Audience: [AUDIENCE]\n- Business type: [BUSINESS TYPE]\n\nOUTPUT:\n- SEO title options (10)\n- Meta description (160 chars)\n- H1 + H2 + H3 outline\n- FAQ section (People Also Ask style)\n- Internal linking suggestions\n- CTA ideas\n- Suggested keywords and synonyms (India focused)"
+  },
+  {
+    "title": "Instagram Reel Script Prompt (India)",
+    "description": "Generate viral Instagram Reel scripts for Indian audiences.",
+    "category": "marketing",
+    "slug": "/prompts/instagram-reel-script-prompt-india.html",
+    "tags": [
+      "instagram",
+      "reels",
+      "india",
+      "social media"
+    ],
+    "prompt": "You are a social media content creator specialized in Indian audiences.\n\nTASK:\nWrite a viral Instagram Reel script.\n\nINPUT:\n- Topic: [TOPIC]\n- Target audience: [AUDIENCE]\n- Language: [English/Hinglish]\n- Tone: [Funny/Professional/Inspirational]\n- Duration: [15s/30s/60s]\n\nOUTPUT:\n- Hook line (first 2 seconds)\n- Script line-by-line\n- Caption suggestion\n- Hashtags (India-focused)\n- CTA suggestion\n- Music/audio suggestion type"
+  },
+  {
+    "title": "Personal Budget Planning Prompt (India)",
+    "description": "Create an India-focused monthly budget plan using INR and local expenses.",
+    "category": "finance",
+    "slug": "/prompts/personal-budget-planning-prompt-india.html",
+    "tags": [
+      "budget",
+      "finance",
+      "india",
+      "money"
+    ],
+    "prompt": "You are a personal finance advisor specialized in India.\n\nTASK:\nCreate a monthly budget plan for an Indian household.\n\nINPUT:\n- Monthly income (INR): [INCOME]\n- City: [CITY]\n- Rent (INR): [RENT]\n- Family size: [FAMILY SIZE]\n- Loans/EMI: [EMI]\n- Savings goal: [GOAL]\n\nOUTPUT:\n- Recommended budget breakdown (percent + INR)\n- Emergency fund strategy\n- Investment suggestions (India context)\n- Credit card and UPI spending tips\n- Common budget mistakes to avoid"
+  },
+  {
+    "title": "Income Tax Filing Prompt (India)",
+    "description": "Explain Indian income tax filing steps and optimize deductions safely.",
+    "category": "finance",
+    "slug": "/prompts/income-tax-filing-prompt-india.html",
+    "tags": [
+      "income tax",
+      "itr",
+      "india",
+      "tax"
+    ],
+    "prompt": "You are an Indian income tax assistant.\n\nTASK:\nHelp a user understand ITR filing in India and suggest safe deduction strategies.\n\nINPUT:\n- Annual income: [INCOME]\n- Income sources: [SALARY/BUSINESS/CAPITAL GAINS]\n- Investments: [INVESTMENTS]\n- Deductions claimed: [80C/80D/HRA/etc]\n- Age: [AGE]\n\nOUTPUT:\n- Step-by-step filing explanation\n- Old regime vs new regime comparison\n- Safe deduction checklist\n- Document checklist\n- Warnings/disclaimer about consulting a CA"
+  },
+  {
+    "title": "UPSC Study Plan Prompt (India)",
+    "description": "Generate a UPSC study plan with timetable and revision strategy.",
+    "category": "education",
+    "slug": "/prompts/upsc-study-plan-prompt-india.html",
+    "tags": [
+      "upsc",
+      "study plan",
+      "india",
+      "education"
+    ],
+    "prompt": "You are an UPSC preparation coach.\n\nTASK:\nCreate a complete UPSC study plan.\n\nINPUT:\n- Exam stage: [PRELIMS/MAINS/BOTH]\n- Available hours per day: [HOURS]\n- Optional subject: [OPTIONAL]\n- Current preparation level: [BEGINNER/INTERMEDIATE]\n\nOUTPUT:\n- Weekly timetable\n- Monthly roadmap\n- Subject-wise plan\n- Revision strategy\n- Test series strategy\n- Resource list suggestions\n- Motivation tips"
+  },
+  {
+    "title": "Rental Agreement Prompt (India)",
+    "description": "Generate a rental agreement template for India with standard clauses.",
+    "category": "legal",
+    "slug": "/prompts/rental-agreement-prompt-india.html",
+    "tags": [
+      "rental agreement",
+      "legal",
+      "india",
+      "property"
+    ],
+    "prompt": "You are a legal drafting assistant for India.\n\nTASK:\nCreate a rental agreement draft for an Indian residential property.\n\nINPUT:\n- Owner name: [OWNER]\n- Tenant name: [TENANT]\n- Property address: [ADDRESS]\n- Monthly rent (INR): [RENT]\n- Deposit (INR): [DEPOSIT]\n- Lease duration: [DURATION]\n- Notice period: [NOTICE]\n\nOUTPUT:\n- Full rental agreement draft\n- Standard Indian clauses (maintenance, utilities, termination)\n- Police verification clause\n- Disclaimer that this is not legal advice"
+  },
+  {
+    "title": "Indian Diet Plan Prompt (Weight Loss)",
+    "description": "Create a vegetarian/non-vegetarian Indian diet plan for weight loss.",
+    "category": "health",
+    "slug": "/prompts/indian-diet-plan-prompt-weight-loss.html",
+    "tags": [
+      "diet",
+      "weight loss",
+      "india",
+      "fitness",
+      "health"
+    ],
+    "prompt": "You are a nutrition assistant specialized in Indian diets.\n\nTASK:\nCreate a weight loss diet plan using Indian foods.\n\nINPUT:\n- Age: [AGE]\n- Gender: [GENDER]\n- Weight: [WEIGHT]\n- Height: [HEIGHT]\n- Food preference: [VEG/NON-VEG]\n- Allergies: [ALLERGIES]\n- Activity level: [LOW/MEDIUM/HIGH]\n\nOUTPUT:\n- 7-day meal plan (breakfast/lunch/snack/dinner)\n- Calorie estimates\n- Indian food substitutions\n- Hydration advice\n- Disclaimer to consult doctor if needed"
+  },
+  {
+    "title": "India Travel Itinerary Prompt",
+    "description": "Generate a detailed travel itinerary for any Indian city/state.",
+    "category": "travel",
+    "slug": "/prompts/india-travel-itinerary-prompt.html",
+    "tags": [
+      "travel",
+      "itinerary",
+      "india",
+      "tourism"
+    ],
+    "prompt": "You are a travel planner specialized in India.\n\nTASK:\nCreate a complete travel itinerary for India.\n\nINPUT:\n- Destination: [DESTINATION]\n- Trip duration: [DAYS]\n- Budget (INR): [BUDGET]\n- Travel style: [BUDGET/LUXURY/FAMILY/SOLO]\n- Interests: [FOOD/NATURE/HISTORY/SHOPPING]\n\nOUTPUT:\n- Day-by-day itinerary\n- Local food recommendations\n- Transport tips\n- Estimated costs in INR\n- Safety tips and cultural notes"
+  },
+  {
+    "title": "Daily Productivity Routine Prompt (India)",
+    "description": "Generate a productivity routine optimized for Indian work culture and schedules.",
+    "category": "productivity",
+    "slug": "/prompts/daily-productivity-routine-prompt-india.html",
+    "tags": [
+      "productivity",
+      "routine",
+      "india",
+      "time management"
+    ],
+    "prompt": "You are a productivity coach specializing in Indian professionals.\n\nTASK:\nCreate a daily routine to maximize productivity.\n\nINPUT:\n- Work type: [OFFICE/REMOTE/STUDENT]\n- Wake-up time: [TIME]\n- Work hours: [HOURS]\n- Main goals: [GOALS]\n- Biggest distractions: [DISTRACTIONS]\n\nOUTPUT:\n- Morning routine\n- Work blocks schedule\n- Break strategy\n- Evening routine\n- Weekly planning system\n- Habit tracking suggestions"
   }
 ]
