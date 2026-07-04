@@ -1,0 +1,42 @@
+/* TEAM */
+
+Author: Nicholas Van-Orton
+Organization: NVO987
+Website: https://nvo987.ai.in
+Identity: https://identity.nvo987.us
+DID: did:web:identity.nvo987.us
+
+Contact:
+contact@nexarium.us
+
+/* PROJECT */
+
+NVO987 AI – Prompt Library (India)
+
+Privacy-first curated AI prompt library.
+
+Built for:
+- ChatGPT
+- Gemini
+- Claude
+- Modern AI Assistants
+
+/* TECHNOLOGY */
+
+HTML5
+CSS3
+JSON-LD
+Schema.org
+Static Website
+GitHub Pages Compatible
+
+/* PRIVACY */
+
+No Cookies
+No Tracking
+No Analytics
+No User Accounts
+
+/* UPDATED */
+
+2026-07-04
