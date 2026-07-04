@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title>NVO987 AI – Prompt Library (India)</title>
+
+  <subtitle>Privacy-first AI Prompt Library</subtitle>
+
+  <link rel="self" href="https://nvo987.ai.in/atom.xml"/>
+
+  <link href="https://nvo987.ai.in/"/>
+
+  <id>https://nvo987.ai.in/</id>
+
+  <updated>2026-07-04T00:00:00Z</updated>
+
+  <author>
+    <name>Nicholas Van-Orton</name>
+    <email>contact@nexarium.us</email>
+  </author>
+
+  <rights>© 2026 NVO987</rights>
+
+  <entry>
+
+    <title>NVO987 AI – Prompt Library (India)</title>
+
+    <link href="https://nvo987.ai.in/"/>
+
+    <id>https://nvo987.ai.in/</id>
+
+    <updated>2026-07-04T00:00:00Z</updated>
+
+    <summary>
+Privacy-first AI prompt library with curated prompt templates for ChatGPT, Gemini, Claude and modern AI assistants.
+    </summary>
+
+  </entry>
+
+</feed>
