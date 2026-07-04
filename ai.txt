@@ -1,0 +1,45 @@
+# AI Access Policy
+
+Site:
+https://nvo987.ai.in/
+
+Project:
+NVO987 AI – Prompt Library (India)
+
+Owner:
+Nicholas Van-Orton
+
+Organization:
+NVO987
+
+Contact:
+contact@nexarium.us
+
+Updated:
+2026-07-04
+
+Identity:
+did:web:identity.nvo987.us
+
+Purpose:
+Privacy-first AI prompt library providing curated prompts for modern AI assistants including ChatGPT, Gemini and Claude.
+
+AI Usage Policy:
+- Reading permitted.
+- Indexing permitted.
+- Attribution required.
+- Preserve author attribution.
+- Do not falsely claim generated summaries as original work.
+- Respect copyright for original prompt collections.
+
+Privacy:
+No cookies.
+No analytics.
+No tracking.
+No profiling.
+
+Canonical:
+https://nvo987.ai.in/
+
+License:
+All Rights Reserved unless otherwise specified.
