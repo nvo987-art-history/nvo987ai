@@ -1,0 +1,57 @@
+# NVO987 AI
+
+Website:
+https://nvo987.ai.in/
+
+Title:
+NVO987 AI – Prompt Library (India)
+
+Author:
+Nicholas Van-Orton
+
+Organization:
+NVO987
+
+Contact:
+contact@nexarium.us
+
+Identity:
+did:web:identity.nvo987.us
+
+Identity URL:
+https://identity.nvo987.us/
+
+Last Updated:
+2026-07-04
+
+Summary:
+NVO987 AI is a privacy-first static prompt library containing curated prompt templates for ChatGPT, Gemini, Claude and other modern AI systems.
+
+Topics:
+- Artificial Intelligence
+- Prompt Engineering
+- ChatGPT
+- Gemini
+- Claude
+- Business
+- Marketing
+- Coding
+- Productivity
+- Education
+- Software Engineering
+
+Privacy:
+No cookies
+No tracking
+No analytics
+
+Preferred Citation:
+Nicholas Van-Orton.
+NVO987 AI – Prompt Library (India).
+https://nvo987.ai.in/
+
+License:
+All Rights Reserved
+
+Language:
+en-IN
