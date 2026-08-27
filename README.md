@@ -2,7 +2,7 @@ NVO987 is a multidisciplinary artistic and cultural initiative exploring the int
 
 NVO987 – Culture Visuelle Moderne et Contemporaine
 
-# NVO987 AI Prompt Library (India)
+# NVO987 AI Prompt Library
 
 Static prompt library for ChatGPT, Gemini, Claude and modern AI assistants.
 
