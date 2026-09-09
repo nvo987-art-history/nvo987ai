@@ -1068,8 +1068,8 @@ NVO987 AI
 <nav class="nav">
 <a href="/index.html">Home</a>
 <a href="/prompts/index.html">Prompts</a>
-<a href="/legal.html">Legal</a>
-<a href="/contact.html">Contact</a>
+<a href="https://nvo987.fr/mentions-legales.html">Mentions légales</a>
+<a href="https://nvo987.fr/contact.html">Contact</a>
 </nav>
 
 </div>
@@ -1236,12 +1236,13 @@ def generate_sitemap():
 
     today = utc_today()
 
-    urls = [
-        f"{BASE_URL}/",
-        f"{BASE_URL}/index.html",
-        f"{BASE_URL}/prompts/index.html",
-        f"{BASE_URL}/legal.html",
-        f"{BASE_URL}/contact.html",
+urls = [
+    f"{BASE_URL}/",
+    f"{BASE_URL}/index.html",
+    f"{BASE_URL}/prompts/index.html",
+    f"https://nvo987.fr/mentions-legales.html",
+    f"https://nvo987.fr/contact.html",
+    
     ]
 
     lines = [
