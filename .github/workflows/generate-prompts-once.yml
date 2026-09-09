@@ -39,19 +39,25 @@ jobs:
             exit 1
           fi
 
-          if grep -R 'index, follow' prompts --include="*.html"; then
-            echo "ERROR: An indexable generated prompt page was detected."
+          echo "1500 prompt pages verified."
+
+          if grep -R -E 'content="index, follow"|content='\''index, follow'\''' prompts --include="*.html"; then
+            echo "ERROR: An indexable prompt page was detected."
             exit 1
           fi
 
-          if grep -R 'noindex' prompts --include="*.html" > /dev/null; then
-            echo "NOINDEX validation passed."
-          else
-            echo "ERROR: NOINDEX validation failed."
+          echo "NOINDEX validation passed."
+
+          NOINDEX_COUNT=$(grep -R -l 'noindex, follow' prompts --include="*.html" | wc -l)
+
+          echo "Files containing noindex, follow: $NOINDEX_COUNT"
+
+          if [ "$NOINDEX_COUNT" -lt 1500 ]; then
+            echo "ERROR: Not all generated prompt pages contain NOINDEX."
             exit 1
           fi
 
-          echo "Verification successful."
+          echo "All generated prompt pages are NOINDEX."
 
       - name: Commit generated pages
         run: |
